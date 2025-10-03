@@ -48,7 +48,7 @@ src/app/
 
 ```bash
 npm install
-ng serve --port 4201
+ng serve --port 4200
 ```
 
 Then open browser at: `http://localhost:4200`
