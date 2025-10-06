@@ -165,6 +165,14 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+.profilediv{
+  width: 50px;
+  text-align: center;
+}
+.profilediv img{
+  text-align: center;
+  width: 60%;
+}
 
 @media (max-width: 768px) {
   .navbar-search {

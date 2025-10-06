@@ -1,0 +1,56 @@
+<div class="container mt-5 py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center my-5 text-success">Login</h2>
+
+      <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label fw-bold">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter your email"
+          />
+          <div class="text-danger mt-1" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <small *ngIf="email?.errors?.['required']">Email is required</small>
+            <small *ngIf="email?.errors?.['email']">Please enter a valid email</small>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label fw-bold">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Enter your password"
+          />
+          <div
+            class="text-danger mt-1"
+            *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          >
+            <small *ngIf="password?.errors?.['required']">Password is required</small>
+            <small *ngIf="password?.errors?.['minlength']">
+              Password must be at least 6 characters
+            </small>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </form>
+
+      <p class="text-center mt-3">
+        Don’t have an account?
+        <a class="btn btn-link p-0 pointer-event" routerLink="/register">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>
