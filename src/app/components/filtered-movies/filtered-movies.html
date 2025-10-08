@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 m-auto">
+      <h2 class="text-center my-4">Browse Movies</h2>
+
+      <!-- 🔹 الفلترة حسب النوع -->
+      <div class="genres">
+        <button
+          *ngFor="let genre of genres"
+          (click)="onGenreSelect(genre.id)"
+          [class.active]="genre.id === selectedGenre"
+        >
+          {{ genre.name }}
+        </button>
+
+        <!-- 🔁 زر إعادة التعيين -->
+        <button class="reset-btn btn btn-warning" (click)="resetFilters()">Reset Filters</button>
+      </div>
+
+      <!-- 🔹 الترتيب -->
+      <div class="sort-section">
+        <label for="sort">Sort by:</label>
+        <select id="sort" [(ngModel)]="selectedSort" (change)="onSortChange()">
+          <option value="popularity.desc">Popularity</option>
+          <option value="release_date.desc">Newest</option>
+          <option value="vote_average.desc">Top Rated</option>
+        </select>
+      </div>
+
+      <!-- 🔹 عرض الأفلام -->
+      <div class="movies">
+        <div *ngFor="let movie of movies" class="movie-card" (click)="openDetails(movie.id)">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path"
+            alt="{{ movie.title }}"
+          />
+          <h4>{{ movie.title }}</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="movies.length > 0">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">⬅ Prev</button>
+
+      <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+        Next ➡
+      </button>
+    </div>
+  </div>
+</div>

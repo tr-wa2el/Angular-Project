@@ -1,0 +1,25 @@
+<div class="container my-4">
+  <h2 class="mb-4">نتائج البحث: "{{ searchQuery }}"</h2>
+
+  <div *ngIf="results.length === 0" class="text-center">
+    <p>لا توجد نتائج للبحث.</p>
+  </div>
+
+  <div class="row" *ngIf="results.length > 0">
+    <div class="col-md-4 mb-4" *ngFor="let movie of results">
+      <div class="card h-100 shadow-sm">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+          class="card-img-top"
+          [alt]="movie.title"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text mb-2">Rating: {{ movie.vote_average }}</p>
+          <p class="card-text text-truncate">{{ movie.overview }}</p>
+          <a [routerLink]="['/movie', movie.id]" class="btn btn-primary mt-auto">Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

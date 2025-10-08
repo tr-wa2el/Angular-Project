@@ -1,0 +1,19 @@
+.card img {
+  object-fit: cover;
+  height: 400px;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 576px) {
+  .card img {
+    height: 300px;
+  }
+}

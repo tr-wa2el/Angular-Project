@@ -3,6 +3,9 @@ import { LoginComp } from './components/login-comp/login-comp';
 import { RegisterComp } from './components/register-comp/register-comp';
 import { AccountDetaiComp } from './components/account-detai-comp/account-detai-comp';
 import { authServiceGuard } from './auth/auth-service-guard';
+import { SearchResults } from './components/search-results/search-results';
+import { MoviesComponent } from './components/movies-component/movies-component';
+import { FilteredMovies } from './components/filtered-movies/filtered-movies';
 
 export const routes: Routes = [
   {
@@ -31,6 +34,21 @@ export const routes: Routes = [
     component : AccountDetaiComp,
     title:"AccountDetails",
     canActivate: [authServiceGuard]
+  },
+  {
+    path:'search',
+    component : SearchResults,
+    title:"Search Result",
+  },
+  {
+    path:'movies',
+    component : MoviesComponent,
+    title:"Movies",
+  },
+  {
+    path:'filteredmovi',
+    component : FilteredMovies,
+    title:"Filter Movies",
   },
 
   {

@@ -1,0 +1,22 @@
+<div *ngIf="isLoading">Loading details...</div>
+
+<div *ngIf="movie && !isLoading" class="details-container">
+  <h2 class="mb-3">{{ movie.title }}</h2>
+
+  <div class="details-body">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"
+      alt="{{ movie.title }}"
+    />
+    <div class="info my-4">
+      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+      <p><strong>Rating:</strong> ⭐ {{ movie.vote_average }}</p>
+      <p><strong>Overview:</strong></p>
+      <p>{{ movie.overview }}</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-danger" (click)="close()">Close</button>
+  </div>
+</div>

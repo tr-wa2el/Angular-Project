@@ -10,7 +10,7 @@ import { AuthService } from '../../shared/authservice';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrl: './navbar.css',
 })
 export class NavbarComponent {
   themeService = inject(ThemeService);
@@ -23,7 +23,7 @@ export class NavbarComponent {
   onSearch(event: Event): void {
     event.preventDefault();
     if (this.searchQuery.trim()) {
-      alert('Search functionality will be implemented by Search Lead (Person 4)');
+      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
       this.searchQuery = '';
     }
   }
@@ -43,7 +43,7 @@ export class NavbarComponent {
       },
       error: (err) => {
         console.error('Logout failed:', err);
-      }
+      },
     });
   }
 }
