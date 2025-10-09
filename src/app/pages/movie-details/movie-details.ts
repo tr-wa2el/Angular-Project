@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -21,6 +21,7 @@ export class MovieDetailsComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private cdr = inject(ChangeDetectorRef);
 
   movie: Movie | null = null;
   cast: CastMember[] = [];
@@ -57,6 +58,10 @@ export class MovieDetailsComponent implements OnInit {
         this.checkWishlistStatus();
         this.isLoading = false;
 
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Movie Details: Change detection triggered');
+
         // Load additional data
         this.loadMovieVideos(id);
         this.loadMovieCast(id);
@@ -66,6 +71,7 @@ export class MovieDetailsComponent implements OnInit {
         console.error('Error loading movie details:', err);
         this.error = 'Failed to load movie details. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -78,6 +84,7 @@ export class MovieDetailsComponent implements OnInit {
           const url = this.movieService.getYouTubeEmbedUrl(this.trailer.key);
           this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         }
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading videos:', err);
@@ -89,6 +96,7 @@ export class MovieDetailsComponent implements OnInit {
     this.movieService.getMovieCredits(id).subscribe({
       next: (response) => {
         this.cast = response.cast.slice(0, 8); // Get top 8 cast members
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading cast:', err);
@@ -100,6 +108,7 @@ export class MovieDetailsComponent implements OnInit {
     this.movieService.getMovieRecommendations(id).subscribe({
       next: (response: MovieRecommendationsResponse) => {
         this.recommendedMovies = response.results.slice(0, 10);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading recommendations:', err);
