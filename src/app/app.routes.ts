@@ -13,7 +13,8 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent),
-    title: 'Home - Movie App'
+    title: 'Home - Movie App',
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'movie/:id',
@@ -23,7 +24,8 @@ export const routes: Routes = [
   {
     path: 'wishlist',
     loadComponent: () => import('./pages/wishlist/wishlist').then(m => m.WishlistComponent),
-    title: 'My Wishlist - Movie App'
+    title: 'My Wishlist - Movie App',
+    runGuardsAndResolvers: 'always'
   },
   {
     path:'login',

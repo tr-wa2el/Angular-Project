@@ -1,9 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { forkJoin, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { forkJoin, of, filter, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { WishlistService } from '../../services/wishlist.service';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.model';
@@ -17,10 +17,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './wishlist.html',
   styleUrl: './wishlist.css'
 })
-export class WishlistComponent implements OnInit {
+export class WishlistComponent implements OnInit, OnDestroy {
   private wishlistService = inject(WishlistService);
   private movieService = inject(MovieService);
   private titleService = inject(Title);
+  private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
   movies: Movie[] = [];
@@ -31,19 +32,42 @@ export class WishlistComponent implements OnInit {
   // Skeleton loading
   skeletonArray: number[] = Array(8).fill(0);
 
+  // Subscriptions
+  private routerSubscription?: Subscription;
+  private wishlistSubscription?: Subscription;
+
   ngOnInit(): void {
     this.titleService.setTitle('My Wishlist | Movie App');
+    
+    // Load movies immediately
     this.loadWishlistMovies();
 
     // Subscribe to wishlist changes
-    this.wishlistService.count$.subscribe(count => {
+    this.wishlistSubscription = this.wishlistService.count$.subscribe(count => {
       this.wishlistCount = count;
 
       // Reload movies if count changed
       if (this.movies.length !== count && !this.isLoading) {
+        console.log('♻️ Wishlist count changed, reloading...');
         this.loadWishlistMovies();
       }
     });
+
+    // Subscribe to router events to reload when navigating to this route
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      // Only reload if we're on the wishlist route
+      if (event.urlAfterRedirects === '/wishlist') {
+        console.log('❤️ Navigation to wishlist detected, reloading...');
+        this.loadWishlistMovies();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
+    this.wishlistSubscription?.unsubscribe();
   }
 
   loadWishlistMovies(): void {

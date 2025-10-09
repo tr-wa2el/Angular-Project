@@ -1,6 +1,8 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { filter, Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
@@ -12,9 +14,10 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
+  private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -30,9 +33,29 @@ export class HomeComponent implements OnInit {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
+  // Router subscription
+  private routerSubscription?: Subscription;
+
   ngOnInit(): void {
     this.titleService.setTitle('Now Playing Movies | Movie App');
+
+    // Load movies immediately
     this.loadMovies();
+
+    // Subscribe to router events to reload when navigating to this route
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      // Only reload if we're on the home route
+      if (event.urlAfterRedirects === '/home' || event.urlAfterRedirects === '/') {
+        console.log('🏠 Navigation to home detected, reloading movies...');
+        this.loadMovies(this.currentPage);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {
