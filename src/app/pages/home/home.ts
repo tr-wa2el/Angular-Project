@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
@@ -15,6 +15,8 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
 export class HomeComponent implements OnInit {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -46,7 +48,9 @@ export class HomeComponent implements OnInit {
         this.isLoading = false;
 
         // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (this.isBrowser) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       },
       error: (err) => {
         console.error('Error loading movies:', err);
@@ -94,6 +98,8 @@ export class HomeComponent implements OnInit {
   }
 
   scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (this.isBrowser) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Movie } from '../../../models/movie.model';
 import { MovieService } from '../../../services/movie.service';
@@ -15,6 +15,8 @@ export class MovieCardComponent {
   @Input() showActions: boolean = true;
 
   private movieService = inject(MovieService);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   isInWishlist: boolean = false;
   imageLoaded: boolean = false;
@@ -94,11 +96,13 @@ export class MovieCardComponent {
   }
 
   private getWishlistFromStorage(): number[] {
+    if (!this.isBrowser) return [];
     const wishlist = localStorage.getItem('movieWishlist');
     return wishlist ? JSON.parse(wishlist) : [];
   }
 
   private saveWishlistToStorage(wishlist: number[]): void {
+    if (!this.isBrowser) return;
     localStorage.setItem('movieWishlist', JSON.stringify(wishlist));
     // Dispatch custom event to update wishlist counter in navbar
     window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail: { count: wishlist.length } }));

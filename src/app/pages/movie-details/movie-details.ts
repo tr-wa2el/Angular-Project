@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
@@ -19,6 +19,8 @@ export class MovieDetailsComponent implements OnInit {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
   private sanitizer = inject(DomSanitizer);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   movie: Movie | null = null;
   cast: CastMember[] = [];
@@ -194,11 +196,13 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   private getWishlistFromStorage(): number[] {
+    if (!this.isBrowser) return [];
     const wishlist = localStorage.getItem('movieWishlist');
     return wishlist ? JSON.parse(wishlist) : [];
   }
 
   private saveWishlistToStorage(wishlist: number[]): void {
+    if (!this.isBrowser) return;
     localStorage.setItem('movieWishlist', JSON.stringify(wishlist));
     window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail: { count: wishlist.length } }));
   }
@@ -208,6 +212,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   scrollToTop(): void {
+    if (!this.isBrowser) return;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
