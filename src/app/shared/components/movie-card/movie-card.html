@@ -1,0 +1,58 @@
+<div class="movie-card" [routerLink]="['/movie', movie.id]">
+  <!-- Poster Image -->
+  <div class="movie-card-poster">
+    <div class="poster-skeleton" *ngIf="!imageLoaded"></div>
+    <img 
+      [src]="posterUrl" 
+      [alt]="movie.title"
+      (load)="onImageLoad()"
+      (error)="onImageError($event)"
+      [class.loaded]="imageLoaded"
+      class="poster-image"
+    />
+    
+    <!-- Rating Badge -->
+    <div class="rating-badge" [ngClass]="ratingClass">
+      <svg class="rating-circle" viewBox="0 0 36 36">
+        <path class="circle-bg"
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <path class="circle-progress"
+          [attr.stroke-dasharray]="ratingPercentage + ', 100'"
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+      </svg>
+      <span class="rating-value">{{ rating }}</span>
+    </div>
+
+    <!-- Wishlist Button -->
+    <button 
+      *ngIf="showActions"
+      class="wishlist-btn" 
+      [class.active]="isInWishlist"
+      (click)="toggleWishlist($event)"
+      [attr.aria-label]="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="heart-icon">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </button>
+
+    <!-- Play Overlay on Hover -->
+    <div class="play-overlay">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Movie Info -->
+  <div class="movie-card-info">
+    <h3 class="movie-title" [title]="movie.title">{{ movie.title }}</h3>
+    <p class="movie-year">{{ releaseYear }}</p>
+  </div>
+</div>

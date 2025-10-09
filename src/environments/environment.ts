@@ -9,8 +9,8 @@ export const environment = {
     appId: "1:791221127105:web:4b75dc51243c360611d140",
     measurementId: "G-C80ZTPM6FZ"
   },
-  //  إضافات مؤقتة لتفادي الأخطاء الخاصة بفريق الـ TMDB
-  tmdbApiBaseUrl: '',
-  tmdbApiKey: '',
-  tmdbImageBaseUrl: ''
+  // TMDB API Configuration
+  tmdbApiBaseUrl: 'https://api.themoviedb.org/3',
+  tmdbApiKey: 'YOUR_TMDB_API_KEY_HERE', // Replace with your actual API key
+  tmdbImageBaseUrl: 'https://image.tmdb.org/t/p/w500'
 };
