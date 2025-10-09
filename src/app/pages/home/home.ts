@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
@@ -17,7 +17,7 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
 export class HomeComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
-  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -33,29 +33,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
-  // Router subscription
-  private routerSubscription?: Subscription;
+  // Route subscription
+  private routeSubscription?: Subscription;
 
   ngOnInit(): void {
     this.titleService.setTitle('Now Playing Movies | Movie App');
 
-    // Load movies immediately
-    this.loadMovies();
-
-    // Subscribe to router events to reload when navigating to this route
-    this.routerSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      // Only reload if we're on the home route
-      if (event.urlAfterRedirects === '/home' || event.urlAfterRedirects === '/') {
-        console.log('🏠 Navigation to home detected, reloading movies...');
-        this.loadMovies(this.currentPage);
-      }
+    // Subscribe to route params (fires on every navigation to this route)
+    this.routeSubscription = this.route.params.subscribe(() => {
+      console.log('🏠 Route activated, loading movies...');
+      this.loadMovies();
     });
   }
 
   ngOnDestroy(): void {
-    this.routerSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {

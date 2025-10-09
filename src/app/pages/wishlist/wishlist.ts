@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { forkJoin, of, filter, Subscription } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WishlistService } from '../../services/wishlist.service';
 import { MovieService } from '../../services/movie.service';
@@ -21,7 +21,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   private wishlistService = inject(WishlistService);
   private movieService = inject(MovieService);
   private titleService = inject(Title);
-  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
 
   movies: Movie[] = [];
@@ -33,40 +33,27 @@ export class WishlistComponent implements OnInit, OnDestroy {
   skeletonArray: number[] = Array(8).fill(0);
 
   // Subscriptions
-  private routerSubscription?: Subscription;
   private wishlistSubscription?: Subscription;
+  private routeSubscription?: Subscription;
 
   ngOnInit(): void {
     this.titleService.setTitle('My Wishlist | Movie App');
     
-    // Load movies immediately
-    this.loadWishlistMovies();
-
-    // Subscribe to wishlist changes
-    this.wishlistSubscription = this.wishlistService.count$.subscribe(count => {
-      this.wishlistCount = count;
-
-      // Reload movies if count changed
-      if (this.movies.length !== count && !this.isLoading) {
-        console.log('♻️ Wishlist count changed, reloading...');
-        this.loadWishlistMovies();
-      }
+    // Subscribe to route params changes (this fires on every navigation)
+    this.routeSubscription = this.route.params.subscribe(() => {
+      console.log('� Route activated, loading wishlist...');
+      this.loadWishlistMovies();
     });
 
-    // Subscribe to router events to reload when navigating to this route
-    this.routerSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      // Only reload if we're on the wishlist route
-      if (event.urlAfterRedirects === '/wishlist') {
-        console.log('❤️ Navigation to wishlist detected, reloading...');
-        this.loadWishlistMovies();
-      }
+    // Subscribe to wishlist changes for real-time updates
+    this.wishlistSubscription = this.wishlistService.wishlist$.subscribe(wishlistIds => {
+      console.log('📦 Wishlist state changed:', wishlistIds.length, 'items');
+      this.wishlistCount = wishlistIds.length;
     });
   }
 
   ngOnDestroy(): void {
-    this.routerSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
     this.wishlistSubscription?.unsubscribe();
   }
 
