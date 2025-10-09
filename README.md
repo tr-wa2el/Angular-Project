@@ -490,7 +490,7 @@ This project is built for educational purposes as part of ITI BeniSuef training 
 ## 👥 Development Team:
 
 ### **Team Lead & Full-Stack Developer**
-**Wael Mohamed Abosamra Abdellatif** (Person 1)
+**Wael Mohamed Abosamra Abdellatif**
 - 🏗️ Project architecture and foundation
 - 🎬 Complete movie features (home, details, wishlist)
 - 🔐 Firebase authentication integration
@@ -500,17 +500,17 @@ This project is built for educational purposes as part of ITI BeniSuef training 
 - 🌿 Main branch management
 
 ### **Movie Features Lead**
-**Hossam Abd Ehamid Abd Elghaffar** (Person 2)
+**Hossam Abd Ehamid Abd Elghaffar**
 - 📋 Popular movies section (planned)
 - ⭐ Top rated movies (planned)
 - 📅 Upcoming releases (planned)
 
 ### **Wishlist Lead**
-**Mohammed Hussein Shokry** (Person 3)
+**Mohammed Hussein Shokry** 
 - ❤️ Wishlist features support (in collaboration)
 
 ### **Search & Authentication Lead**
-**Rawan Ahmed Abd Elaziz** (Person 4 & 5)
+**Rawan Ahmed Abd Elaziz**
 - 🔍 Search functionality (planned)
 - 🎛️ Advanced filtering (planned)
 - 🌍 Multi-language support (planned)
