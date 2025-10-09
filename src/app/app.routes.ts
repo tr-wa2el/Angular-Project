@@ -8,44 +8,51 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent),
+    loadComponent: () => import('./pages/home/home').then((m) => m.HomeComponent),
     title: 'Home - Movie App',
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     path: 'movie/:id',
-    loadComponent: () => import('./pages/movie-details/movie-details').then(m => m.MovieDetailsComponent),
-    title: 'Movie Details'
+    loadComponent: () =>
+      import('./pages/movie-details/movie-details').then((m) => m.MovieDetailsComponent),
+    title: 'Movie Details',
   },
   {
     path: 'wishlist',
-    loadComponent: () => import('./pages/wishlist/wishlist').then(m => m.WishlistComponent),
+    loadComponent: () => import('./pages/wishlist/wishlist').then((m) => m.WishlistComponent),
     title: 'My Wishlist - Movie App',
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
-    path:'login',
-    component : LoginComp,
-    title:"Login"
+    path: 'search',
+    loadComponent: () =>
+      import('./components/search-results/search-results').then((m) => m.SearchResults),
+    title: 'Search Results - Movie App',
   },
   {
-    path:'register',
-    component : RegisterComp,
-    title:"Register"
+    path: 'login',
+    component: LoginComp,
+    title: 'Login',
   },
   {
-    path:'accdetails',
-    component : AccountDetaiComp,
-    title:"AccountDetails",
-    canActivate: [authServiceGuard]
+    path: 'register',
+    component: RegisterComp,
+    title: 'Register',
+  },
+  {
+    path: 'accdetails',
+    component: AccountDetaiComp,
+    title: 'AccountDetails',
+    canActivate: [authServiceGuard],
   },
 
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'home',
   },
 ];

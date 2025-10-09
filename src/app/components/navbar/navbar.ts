@@ -45,11 +45,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authSubscription?.unsubscribe();
   }
 
-  onSearch(event: Event): void {
-    event.preventDefault();
-    if (this.searchQuery.trim()) {
-      alert('Search functionality will be implemented by Search Lead (Person 4)');
-      this.searchQuery = '';
+  onSearch(event: Event) {
+    event.preventDefault(); // يمنع إعادة تحميل الصفحة
+
+    const trimmedQuery = this.searchQuery.trim();
+    if (trimmedQuery) {
+      // يوجه المستخدم إلى صفحة البحث
+      this.router.navigate(['/search'], { queryParams: { query: trimmedQuery } });
+      this.searchQuery = ''; // تفريغ الحقل بعد البحث
     }
   }
 
