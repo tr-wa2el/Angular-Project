@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../shared/authservice';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register-comp',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './register-comp.html',
   styleUrls: ['./register-comp.css']
 })

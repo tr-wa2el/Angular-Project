@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieVideo, CastMember, MovieRecommendationsResponse } from '../../models/movie.model';
@@ -9,7 +9,7 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, MovieCardComponent],
+  imports: [CommonModule, MovieCardComponent],
   templateUrl: './movie-details.html',
   styleUrl: './movie-details.css'
 })

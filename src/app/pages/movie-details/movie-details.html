@@ -3,7 +3,7 @@
   <div class="movie-backdrop">
     <div class="backdrop-overlay"></div>
     <img [src]="backdropUrl" [alt]="movie.title" class="backdrop-image" />
-    
+
     <!-- Back Button -->
     <button class="back-btn" (click)="goBack()" aria-label="Go back">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -20,10 +20,10 @@
         <!-- Poster -->
         <div class="movie-poster-wrapper">
           <img [src]="posterUrl" [alt]="movie.title" class="movie-poster" />
-          
+
           <!-- Wishlist Button -->
-          <button 
-            class="wishlist-btn-large" 
+          <button
+            class="wishlist-btn-large"
             [class.active]="isInWishlist"
             (click)="toggleWishlist()"
           >
@@ -107,7 +107,7 @@
     <div class="container">
       <h2 class="section-title">Official Trailer</h2>
       <div class="trailer-wrapper">
-        <iframe 
+        <iframe
           [src]="trailerUrl"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -139,7 +139,7 @@
     <div class="container">
       <h2 class="section-title">You May Also Like</h2>
       <div class="recommendations-grid">
-        <app-movie-card 
+        <app-movie-card
           *ngFor="let movie of recommendedMovies"
           [movie]="movie"
         ></app-movie-card>
@@ -185,7 +185,7 @@
 </div>
 
 <!-- Back to Top Button -->
-<button 
+<button
   class="back-to-top"
   (click)="scrollToTop()"
   [class.visible]="!isLoading"

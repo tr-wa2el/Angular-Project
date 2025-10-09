@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { AuthService } from '../../shared/authservice'; // ✅ تأكد من الاسم الصحيح
+import { RouterLink, Router } from '@angular/router';
+import { AuthService } from '../../shared/authservice';
 
 @Component({
   selector: 'app-login-comp',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login-comp.html',
-  styleUrls: ['./login-comp.css'], // ✅ صححت من styleUrl إلى styleUrls
+  styleUrls: ['./login-comp.css'],
 })
 export class LoginComp implements OnInit {
   loginForm!: FormGroup;

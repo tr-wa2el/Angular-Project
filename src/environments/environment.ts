@@ -11,6 +11,6 @@ export const environment = {
   },
   // TMDB API Configuration
   tmdbApiBaseUrl: 'https://api.themoviedb.org/3',
-  tmdbApiKey: 'YOUR_TMDB_API_KEY_HERE', // Replace with your actual API key
+  tmdbApiKey: 'f67cb9b8755a4e5679c924eaef42f912',
   tmdbImageBaseUrl: 'https://image.tmdb.org/t/p/w500'
 };
