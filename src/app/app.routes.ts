@@ -28,6 +28,12 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
+    path: 'genremovie',
+    loadComponent: () => import('./components/genremovies/genremovies').then(m => m.Genremovies),
+    title: 'My Genre Movie - Movie App',
+    runGuardsAndResolvers: 'always'
+  },
+  {
     path:'login',
     component : LoginComp,
     title:"Login"
