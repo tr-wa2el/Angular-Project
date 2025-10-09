@@ -468,9 +468,18 @@ git push origin feature/your-feature-name
 ## 📞 Contact & Support:
 
 ### **Developer Contact:**
+#### **Eng Wael Abosamra**
 - **Email**: eng.wael.abosamra@gmail.com
 - **GitHub**: [@tr-wa2el](https://github.com/tr-wa2el)
 - **Repository**: [Angular-Project](https://github.com/tr-wa2el/Angular-Project)
+
+### **Eng Rawan Ahmed Abd Elaziz**
+- **Email**: rawanAhmed23@gmail.com
+- **GitHub**: [@rawanAhmed23](https://github.com/rawanAhmed23)
+
+### **Eng Hossam Abd Ehamid Abd Elghaffar**
+- **Email**: 
+- **GitHub**:[@HOSSMCV56](https://github.com/HOSSMCV56)
 
 ### **Report Issues:**
 - GitHub Issues: https://github.com/tr-wa2el/Angular-Project/issues
