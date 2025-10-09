@@ -1,0 +1,197 @@
+<div class="movie-details-container" *ngIf="!isLoading && !error && movie">
+  <!-- Backdrop Section -->
+  <div class="movie-backdrop">
+    <div class="backdrop-overlay"></div>
+    <img [src]="backdropUrl" [alt]="movie.title" class="backdrop-image" />
+    
+    <!-- Back Button -->
+    <button class="back-btn" (click)="goBack()" aria-label="Go back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      <span>Back</span>
+    </button>
+  </div>
+
+  <!-- Movie Info Section -->
+  <div class="movie-info-section">
+    <div class="container">
+      <div class="movie-info-grid">
+        <!-- Poster -->
+        <div class="movie-poster-wrapper">
+          <img [src]="posterUrl" [alt]="movie.title" class="movie-poster" />
+          
+          <!-- Wishlist Button -->
+          <button 
+            class="wishlist-btn-large" 
+            [class.active]="isInWishlist"
+            (click)="toggleWishlist()"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="heart-icon">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>{{ isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist' }}</span>
+          </button>
+        </div>
+
+        <!-- Details -->
+        <div class="movie-details-content">
+          <h1 class="movie-title">{{ movie.title }}</h1>
+          <p class="movie-tagline" *ngIf="movie.tagline">{{ movie.tagline }}</p>
+
+          <!-- Rating & Info -->
+          <div class="movie-meta">
+            <div class="rating-badge-large" [ngClass]="ratingClass">
+              <svg class="rating-circle" viewBox="0 0 36 36">
+                <path class="circle-bg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path class="circle-progress"
+                  [attr.stroke-dasharray]="ratingPercentage + ', 100'"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+              <span class="rating-value">{{ rating }}</span>
+            </div>
+
+            <div class="meta-items">
+              <span class="meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                </svg>
+                {{ runtime }}
+              </span>
+              <span class="meta-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                </svg>
+                {{ releaseYear }}
+              </span>
+              <span class="meta-item" *ngIf="movie.status">
+                {{ movie.status }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Genres -->
+          <div class="genres" *ngIf="movie.genres && movie.genres.length > 0">
+            <span class="genre-tag" *ngFor="let genre of movie.genres">
+              {{ genre.name }}
+            </span>
+          </div>
+
+          <!-- Overview -->
+          <div class="overview-section">
+            <h2>Overview</h2>
+            <p>{{ movie.overview || 'No overview available.' }}</p>
+          </div>
+
+          <!-- Additional Info -->
+          <div class="additional-info">
+            <div class="info-item" *ngIf="movie.budget">
+              <span class="info-label">Budget:</span>
+              <span class="info-value">{{ budget }}</span>
+            </div>
+            <div class="info-item" *ngIf="movie.revenue">
+              <span class="info-label">Revenue:</span>
+              <span class="info-value">{{ revenue }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trailer Section -->
+  <div class="trailer-section" *ngIf="trailerUrl">
+    <div class="container">
+      <h2 class="section-title">Official Trailer</h2>
+      <div class="trailer-wrapper">
+        <iframe 
+          [src]="trailerUrl"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="trailer-iframe"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cast Section -->
+  <div class="cast-section" *ngIf="cast.length > 0">
+    <div class="container">
+      <h2 class="section-title">Top Cast</h2>
+      <div class="cast-grid">
+        <div class="cast-card" *ngFor="let member of cast">
+          <img [src]="getProfileUrl(member.profile_path)" [alt]="member.name" class="cast-image" />
+          <div class="cast-info">
+            <h3 class="cast-name">{{ member.name }}</h3>
+            <p class="cast-character">{{ member.character }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommended Movies Section -->
+  <div class="recommendations-section" *ngIf="recommendedMovies.length > 0">
+    <div class="container">
+      <h2 class="section-title">You May Also Like</h2>
+      <div class="recommendations-grid">
+        <app-movie-card 
+          *ngFor="let movie of recommendedMovies"
+          [movie]="movie"
+        ></app-movie-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="backdrop-skeleton"></div>
+  <div class="container">
+    <div class="details-skeleton">
+      <div class="poster-skeleton"></div>
+      <div class="content-skeleton">
+        <div class="title-skeleton"></div>
+        <div class="meta-skeleton"></div>
+        <div class="text-skeleton"></div>
+        <div class="text-skeleton"></div>
+        <div class="text-skeleton"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="error-state" *ngIf="error && !isLoading">
+  <div class="container">
+    <div class="error-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+    </div>
+    <h2>Oops! Something went wrong</h2>
+    <p>{{ error }}</p>
+    <button class="btn-primary" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      Go Back
+    </button>
+  </div>
+</div>
+
+<!-- Back to Top Button -->
+<button 
+  class="back-to-top"
+  (click)="scrollToTop()"
+  [class.visible]="!isLoading"
+  aria-label="Back to top"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+  </svg>
+</button>

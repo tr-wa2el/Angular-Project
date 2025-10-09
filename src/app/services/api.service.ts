@@ -130,6 +130,15 @@ export class ApiService {
     return this.makeRequest<any>(endpoint, params, 'getMovieVideos');
   }
 
+  getMovieRecommendations(id: number, page: number = 1, language: string = 'en-US'): Observable<ApiResponse<MovieListResponse>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('language', language);
+    const endpoint = `/movie/${id}/recommendations`;
+
+    return this.makeRequest<MovieListResponse>(endpoint, params, 'getPopularMovies');
+  }
+
   searchMovies(query: string, page: number = 1, language: string = 'en-US'): Observable<ApiResponse<MovieListResponse>> {
     const params = new HttpParams()
       .set('query', query)

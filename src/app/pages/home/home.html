@@ -41,7 +41,7 @@
     <!-- Movies Grid -->
     <div *ngIf="!isLoading && !error && movies.length > 0" class="movies-section">
       <div class="movies-grid fade-in">
-        <app-movie-card 
+        <app-movie-card
           *ngFor="let movie of movies"
           [movie]="movie"
         ></app-movie-card>
@@ -51,7 +51,7 @@
       <div class="pagination-container">
         <div class="pagination">
           <!-- Previous Button -->
-          <button 
+          <button
             class="pagination-btn pagination-prev"
             [disabled]="currentPage === 1"
             (click)="previousPage()"
@@ -65,17 +65,17 @@
 
           <!-- Page Numbers -->
           <div class="pagination-numbers">
-            <button 
+            <button
               *ngIf="getPageNumbers()[0] > 1"
               class="pagination-number"
               (click)="onPageChange(1)"
             >
               1
             </button>
-            
+
             <span *ngIf="getPageNumbers()[0] > 2" class="pagination-ellipsis">...</span>
 
-            <button 
+            <button
               *ngFor="let page of getPageNumbers()"
               class="pagination-number"
               [class.active]="page === currentPage"
@@ -86,7 +86,7 @@
 
             <span *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1" class="pagination-ellipsis">...</span>
 
-            <button 
+            <button
               *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages"
               class="pagination-number"
               (click)="onPageChange(totalPages)"
@@ -96,7 +96,7 @@
           </div>
 
           <!-- Next Button -->
-          <button 
+          <button
             class="pagination-btn pagination-next"
             [disabled]="currentPage === totalPages"
             (click)="nextPage()"
@@ -130,7 +130,7 @@
   </div>
 
   <!-- Back to Top Button -->
-  <button 
+  <button
     class="back-to-top"
     (click)="scrollToTop()"
     [class.visible]="!isLoading"

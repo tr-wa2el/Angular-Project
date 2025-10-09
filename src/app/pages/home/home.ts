@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   movies: Movie[] = [];
   isLoading: boolean = true;
   error: string | null = null;
-  
+
   // Pagination
   currentPage: number = 1;
   totalPages: number = 1;
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   loadMovies(page: number = 1): void {
     this.isLoading = true;
     this.error = null;
-    
+
     this.movieService.getNowPlayingMovies(page).subscribe({
       next: (response: MovieListResponse) => {
         this.movies = response.results;
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
         this.totalPages = response.total_pages;
         this.totalResults = response.total_results;
         this.isLoading = false;
-        
+
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
@@ -78,18 +78,18 @@ export class HomeComponent implements OnInit {
     const pages: number[] = [];
     const maxPagesToShow = 5;
     const halfRange = Math.floor(maxPagesToShow / 2);
-    
+
     let startPage = Math.max(1, this.currentPage - halfRange);
     let endPage = Math.min(this.totalPages, startPage + maxPagesToShow - 1);
-    
+
     if (endPage - startPage < maxPagesToShow - 1) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
-    
+
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   }
 

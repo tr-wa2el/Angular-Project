@@ -2,15 +2,15 @@
   <!-- Poster Image -->
   <div class="movie-card-poster">
     <div class="poster-skeleton" *ngIf="!imageLoaded"></div>
-    <img 
-      [src]="posterUrl" 
+    <img
+      [src]="posterUrl"
       [alt]="movie.title"
       (load)="onImageLoad()"
       (error)="onImageError($event)"
       [class.loaded]="imageLoaded"
       class="poster-image"
     />
-    
+
     <!-- Rating Badge -->
     <div class="rating-badge" [ngClass]="ratingClass">
       <svg class="rating-circle" viewBox="0 0 36 36">
@@ -30,9 +30,9 @@
     </div>
 
     <!-- Wishlist Button -->
-    <button 
+    <button
       *ngIf="showActions"
-      class="wishlist-btn" 
+      class="wishlist-btn"
       [class.active]="isInWishlist"
       (click)="toggleWishlist($event)"
       [attr.aria-label]="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'"

@@ -13,9 +13,9 @@ import { MovieService } from '../../../services/movie.service';
 export class MovieCardComponent {
   @Input() movie!: Movie;
   @Input() showActions: boolean = true;
-  
+
   private movieService = inject(MovieService);
-  
+
   isInWishlist: boolean = false;
   imageLoaded: boolean = false;
 
@@ -60,9 +60,9 @@ export class MovieCardComponent {
   toggleWishlist(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    
+
     this.isInWishlist = !this.isInWishlist;
-    
+
     if (this.isInWishlist) {
       this.addToWishlist();
     } else {

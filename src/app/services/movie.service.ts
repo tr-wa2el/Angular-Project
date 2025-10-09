@@ -76,13 +76,8 @@ export class MovieService {
    * Get recommended movies for a specific movie
    */
   getMovieRecommendations(id: number, page: number = 1, language: string = 'en-US'): Observable<MovieRecommendationsResponse> {
-    return this.apiService.getMovieDetails(id, language).pipe(
-      map(response => ({
-        page: 1,
-        results: [],
-        total_pages: 0,
-        total_results: 0
-      }))
+    return this.apiService.getMovieRecommendations(id, page, language).pipe(
+      map(response => response.data)
     );
   }
 

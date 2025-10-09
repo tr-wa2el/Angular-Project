@@ -15,7 +15,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent),
     title: 'Home - Movie App'
   },
- 
+  {
+    path: 'movie/:id',
+    loadComponent: () => import('./pages/movie-details/movie-details').then(m => m.MovieDetailsComponent),
+    title: 'Movie Details'
+  },
   {
     path:'login',
     component : LoginComp,
