@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from '../../services/theme.service';
+import { AuthService } from '../../shared/authservice';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ import { ThemeService } from '../../services/theme.service';
 export class NavbarComponent {
   themeService = inject(ThemeService);
   private router = inject(Router);
+  private auth = inject(AuthService);
 
   searchQuery = '';
   showMobileMenu = false;
@@ -32,5 +34,16 @@ export class NavbarComponent {
 
   toggleMobileMenu(): void {
     this.showMobileMenu = !this.showMobileMenu;
+  }
+
+  onLogout() {
+    this.auth.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Logout failed:', err);
+      }
+    });
   }
 }

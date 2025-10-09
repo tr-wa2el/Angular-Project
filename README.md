@@ -142,3 +142,5 @@ git push origin main
 - **Rawan Ahmed Abd Elaziz** - Search & Filtering Lead + Authentication & Localization Lead
 
 *Last Updated: October 4, 2025*
+
+
