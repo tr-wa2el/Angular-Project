@@ -107,6 +107,18 @@
   font-size: 14px;
 }
 
+.tmdb-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tmdb-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
 .footer-bottom-links {
   display: flex;
   align-items: center;
@@ -127,6 +139,19 @@
 .separator {
   color: var(--text-secondary);
   opacity: 0.5;
+}
+
+/* Active link style */
+.footer-section a[routerLink].active-link {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* External link indicator */
+.footer-section a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 12px;
+  opacity: 0.6;
 }
 
 @media (max-width: 1024px) {
