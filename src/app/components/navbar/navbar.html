@@ -50,14 +50,23 @@
         <span class="wishlist-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
 
-      <span class="nav-link disabled">Login (Coming Soon)</span>
-      <div class=" profilediv bg-black">
+      <!-- Profile icon - only show if logged in -->
+      <a *ngIf="isLoggedIn" routerLink="/accdetails" class="profile-link" title="Account Details">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </a>
 
-        <a routerLink="/accdetails" ><img src="customer_person_people_man_user_client_1629.ico"></a>
-
-
-      </div>
-      <button (click)="onLogout()" class="btn btn-danger">Log Out</button>
+      <!-- Login/Logout button -->
+      <button (click)="onAuthAction()" class="auth-btn" [class.btn-danger]="isLoggedIn" [class.btn-primary]="!isLoggedIn">
+        <svg *ngIf="!isLoggedIn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+          <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/>
+        </svg>
+        <svg *ngIf="isLoggedIn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+        </svg>
+        {{ isLoggedIn ? 'Logout' : 'Login' }}
+      </button>
     </div>
 
     <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
@@ -78,7 +87,10 @@
         Wishlist
         <span class="wishlist-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
-      <span class="disabled">Login (Coming Soon)</span>
+      <a *ngIf="isLoggedIn" routerLink="/accdetails" (click)="toggleMobileMenu()">Account Details</a>
+      <button (click)="onAuthAction(); toggleMobileMenu()" class="mobile-auth-btn" [class.btn-danger]="isLoggedIn" [class.btn-primary]="!isLoggedIn">
+        {{ isLoggedIn ? 'Logout' : 'Login' }}
+      </button>
     </div>
   }
 </nav>

@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchQuery = '';
   showMobileMenu = false;
   wishlistCount = 0;
+  isLoggedIn = false;
   private wishlistSubscription?: Subscription;
 
   ngOnInit(): void {
@@ -30,6 +31,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.wishlistSubscription = this.wishlistService.count$.subscribe(count => {
       this.wishlistCount = count;
     });
+
+    // Check if user is logged in
+    this.checkLoginStatus();
   }
 
   ngOnDestroy(): void {
@@ -52,13 +56,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showMobileMenu = !this.showMobileMenu;
   }
 
-  onLogout() {
+  checkLoginStatus(): void {
+    // Check if user is logged in by checking current user
+    this.isLoggedIn = this.auth.user !== null;
+  }
+
+  onAuthAction(): void {
+    if (this.isLoggedIn) {
+      // User is logged in, logout
+      this.onLogout();
+    } else {
+      // User is not logged in, navigate to login
+      this.router.navigate(['/login']);
+    }
+  }
+
+  onLogout(): void {
     this.auth.logout().subscribe({
       next: () => {
+        this.isLoggedIn = false;
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Logout failed:', err);
+        // Even if logout fails, redirect to login
+        this.isLoggedIn = false;
+        this.router.navigate(['/login']);
       }
     });
   }
