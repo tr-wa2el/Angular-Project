@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -23,6 +23,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   private titleService = inject(Title);
   private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -38,7 +39,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.titleService.setTitle('My Wishlist | Movie App');
-    
+
     // Subscribe to route params changes (this fires on every navigation)
     this.routeSubscription = this.route.params.subscribe(() => {
       console.log('� Route activated, loading wishlist...');
@@ -70,6 +71,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
       this.movies = [];
       this.isLoading = false;
       console.log('📭 Wishlist is empty');
+      this.cdr.detectChanges();
       return;
     }
 
@@ -90,11 +92,16 @@ export class WishlistComponent implements OnInit, OnDestroy {
         this.movies = movies.filter((movie): movie is Movie => movie !== null);
         this.isLoading = false;
         console.log('🎯 Final movies array:', this.movies);
+        
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Change detection triggered');
       },
       error: (err) => {
         console.error('❌ Error loading wishlist movies:', err);
         this.error = 'Failed to load wishlist. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
