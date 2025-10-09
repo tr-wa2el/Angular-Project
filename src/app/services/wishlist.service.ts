@@ -9,17 +9,17 @@ import { Movie } from '../models/movie.model';
 export class WishlistService {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
-  
+
   private readonly STORAGE_KEY = 'movieWishlist';
-  
+
   // BehaviorSubject to track wishlist state
   private wishlistSubject = new BehaviorSubject<number[]>(this.loadWishlistFromStorage());
   public wishlist$ = this.wishlistSubject.asObservable();
-  
+
   // BehaviorSubject to track wishlist count
   private countSubject = new BehaviorSubject<number>(this.loadWishlistFromStorage().length);
   public count$ = this.countSubject.asObservable();
-  
+
   constructor() {
     // Listen to storage changes from other tabs
     if (this.isBrowser) {
@@ -59,16 +59,16 @@ export class WishlistService {
    */
   addToWishlist(movieId: number): boolean {
     const currentWishlist = this.wishlistSubject.value;
-    
+
     // Check if already exists
     if (currentWishlist.includes(movieId)) {
       return false;
     }
-    
+
     // Add to wishlist
     const updatedWishlist = [...currentWishlist, movieId];
     this.saveWishlist(updatedWishlist);
-    
+
     return true;
   }
 
@@ -77,16 +77,16 @@ export class WishlistService {
    */
   removeFromWishlist(movieId: number): boolean {
     const currentWishlist = this.wishlistSubject.value;
-    
+
     // Check if exists
     if (!currentWishlist.includes(movieId)) {
       return false;
     }
-    
+
     // Remove from wishlist
     const updatedWishlist = currentWishlist.filter(id => id !== movieId);
     this.saveWishlist(updatedWishlist);
-    
+
     return true;
   }
 
@@ -117,15 +117,15 @@ export class WishlistService {
     if (this.isBrowser) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(wishlist));
     }
-    
+
     this.wishlistSubject.next(wishlist);
     this.countSubject.next(wishlist.length);
-    
+
     // Dispatch custom event for backward compatibility
     if (this.isBrowser) {
       window.dispatchEvent(
-        new CustomEvent('wishlistUpdated', { 
-          detail: { count: wishlist.length } 
+        new CustomEvent('wishlistUpdated', {
+          detail: { count: wishlist.length }
         })
       );
     }
@@ -138,7 +138,7 @@ export class WishlistService {
     if (!this.isBrowser) {
       return [];
     }
-    
+
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       return stored ? JSON.parse(stored) : [];

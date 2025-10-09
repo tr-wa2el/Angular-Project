@@ -14,8 +14,8 @@
             {{ wishlistCount }} {{ wishlistCount === 1 ? 'movie' : 'movies' }} in your wishlist
           </p>
         </div>
-        
-        <button 
+
+        <button
           *ngIf="movies.length > 0 && !isLoading"
           class="clear-all-btn"
           (click)="clearAllWishlist()"
@@ -85,9 +85,9 @@
       <div class="movies-grid fade-in">
         <div *ngFor="let movie of movies" class="movie-card-wrapper">
           <app-movie-card [movie]="movie"></app-movie-card>
-          
+
           <!-- Remove Button Overlay -->
-          <button 
+          <button
             class="remove-btn"
             (click)="removeFromWishlist(movie, $event)"
             title="Remove from wishlist"

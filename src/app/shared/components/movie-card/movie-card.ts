@@ -28,7 +28,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Check if movie is in wishlist
     this.checkWishlistStatus();
-    
+
     // Subscribe to wishlist changes
     this.wishlistSubscription = this.wishlistService.wishlist$.subscribe(() => {
       this.checkWishlistStatus();
@@ -77,7 +77,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     event.stopPropagation();
 
     const wasAdded = this.wishlistService.toggleWishlist(this.movie.id);
-    
+
     if (wasAdded) {
       this.showNotification(`${this.movie.title} added to wishlist ❤️`, 'success');
     } else {
