@@ -92,7 +92,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
         this.movies = movies.filter((movie): movie is Movie => movie !== null);
         this.isLoading = false;
         console.log('🎯 Final movies array:', this.movies);
-        
+
         // Force Angular to detect changes
         this.cdr.detectChanges();
         console.log('🔄 Change detection triggered');

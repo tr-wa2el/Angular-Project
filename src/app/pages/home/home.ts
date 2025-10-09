@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -62,6 +63,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Home: Change detection triggered');
+
         // Scroll to top
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -71,6 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.error('Error loading movies:', err);
         this.error = 'Failed to load movies. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
