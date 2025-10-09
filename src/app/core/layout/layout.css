@@ -6,6 +6,12 @@
 
 .main-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   min-height: calc(100vh - 64px);
-  padding-top: 20px;
+}
+
+/* Remove default padding for auth pages */
+.main-content:has(.auth-container) {
+  padding: 0;
 }

@@ -1,39 +1,61 @@
-<div class="container mt-5 py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <h2 class="text-center my-5 text-success">Login</h2>
+<div class="auth-container">
+  <div class="auth-wrapper">
+    <div class="auth-card fade-in">
+      <!-- Header -->
+      <div class="auth-header">
+        <div class="auth-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Sign in to continue to your account</p>
+      </div>
 
-      <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Form -->
+      <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
         <!-- Email -->
-        <div class="mb-3">
-          <label for="email" class="form-label fw-bold">Email</label>
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            Email Address
+          </label>
           <input
             type="email"
             id="email"
             formControlName="email"
             class="form-control"
-            placeholder="Enter your email"
+            placeholder="you@example.com"
+            autocomplete="email"
           />
-          <div class="text-danger mt-1" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          <div class="error-message" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
             <small *ngIf="email?.errors?.['required']">Email is required</small>
             <small *ngIf="email?.errors?.['email']">Please enter a valid email</small>
           </div>
         </div>
 
         <!-- Password -->
-        <div class="mb-3">
-          <label for="password" class="form-label fw-bold">Password</label>
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Password
+          </label>
           <input
             type="password"
             id="password"
             formControlName="password"
             class="form-control"
             placeholder="Enter your password"
+            autocomplete="current-password"
           />
-          <div
-            class="text-danger mt-1"
-            *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-          >
+          <div class="error-message" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
             <small *ngIf="password?.errors?.['required']">Password is required</small>
             <small *ngIf="password?.errors?.['minlength']">
               Password must be at least 6 characters
@@ -42,15 +64,23 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">
-          Login
+        <button
+          type="submit"
+          class="btn-auth btn-primary"
+          [disabled]="loginForm.invalid"
+          [class.btn-loading]="loginForm.invalid">
+          <span *ngIf="!loginForm.invalid">Sign In</span>
+          <span *ngIf="loginForm.invalid">Please fill all fields</span>
         </button>
       </form>
 
-      <p class="text-center mt-3">
-        Don’t have an account?
-        <a class="btn btn-link p-0 pointer-event" routerLink="/register">Register here</a>
-      </p>
+      <!-- Footer -->
+      <div class="auth-footer">
+        <p class="auth-footer-text">
+          Don't have an account?
+          <a routerLink="/register" class="auth-link">Create Account</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

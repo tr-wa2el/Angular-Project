@@ -1,70 +1,156 @@
-<div class="container mt-5 py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 m-auto">
-      <h2 class="text-center my-5">Register</h2>
+<div class="auth-container">
+  <div class="auth-wrapper">
+    <div class="auth-card fade-in">
+      <!-- Header -->
+      <div class="auth-header">
+        <div class="auth-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+        </div>
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join us and start your journey</p>
+      </div>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
+      <!-- Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
         <!-- Email -->
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter your email"/>
-          <div class="text-danger" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          <div class="error-message" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
             <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
             <small *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</small>
           </div>
         </div>
 
         <!-- Name -->
-        <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter your name"/>
-          <div class="text-danger" *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)">
+        <div class="form-group">
+          <label for="name" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="John Doe"
+            autocomplete="name"
+          />
+          <div class="error-message" *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)">
             <small *ngIf="registerForm.get('name')?.errors?.['required']">Name is required</small>
           </div>
         </div>
 
         <!-- Username -->
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" formControlName="username" class="form-control" placeholder="Enter your username"/>
-          <div class="text-danger" *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+        <div class="form-group">
+          <label for="username" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            class="form-control"
+            placeholder="johndoe123"
+            autocomplete="username"
+          />
+          <div class="error-message" *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
             <small *ngIf="registerForm.get('username')?.errors?.['required']">Username is required</small>
             <small *ngIf="registerForm.get('username')?.errors?.['hasSpace']">Username cannot contain spaces</small>
           </div>
         </div>
 
         <!-- Password -->
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter your password"/>
-          <div class="text-danger" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Create a strong password"
+            autocomplete="new-password"
+          />
+          <div class="error-message" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
             <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</small>
             <small *ngIf="registerForm.get('password')?.errors?.['weakPassword']">
-              Password must be at least 8 characters, include uppercase, lowercase, number & special char (@*%$#)
+              Must be 8+ chars with uppercase, lowercase, number & special char (@*%$#)
             </small>
           </div>
         </div>
 
         <!-- Confirm Password -->
-        <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirm Password</label>
-          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" placeholder="Confirm your password"/>
-          <div class="text-danger" *ngIf="(registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.errors?.['passwordsMismatch']">
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="form-control"
+            placeholder="Re-enter your password"
+            autocomplete="new-password"
+          />
+          <div class="error-message" *ngIf="(registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.errors?.['passwordsMismatch']">
             <small>Passwords do not match</small>
           </div>
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Register</button>
+        <button
+          type="submit"
+          class="btn-auth btn-primary"
+          [disabled]="registerForm.invalid"
+          [class.btn-loading]="registerForm.invalid">
+          <span *ngIf="!registerForm.invalid">Create Account</span>
+          <span *ngIf="registerForm.invalid">Please fill all fields correctly</span>
+        </button>
       </form>
 
-    
-
-      <p class="text-center mt-3">
-        Already have an account?
-        <a class="btn btn-link p-0 pointer-event" routerLink="/login">Login here</a>
-      </p>
+      <!-- Footer -->
+      <div class="auth-footer">
+        <p class="auth-footer-text">
+          Already have an account?
+          <a routerLink="/login" class="auth-link">Sign In</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>
