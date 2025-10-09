@@ -21,6 +21,11 @@ export const routes: Routes = [
     title: 'Movie Details'
   },
   {
+    path: 'wishlist',
+    loadComponent: () => import('./pages/wishlist/wishlist').then(m => m.WishlistComponent),
+    title: 'My Wishlist - Movie App'
+  },
+  {
     path:'login',
     component : LoginComp,
     title:"Login"

@@ -248,24 +248,28 @@ input, textarea, select {
   --mdc-snackbar-supporting-text-color: var(--text-primary);
 }
 
-.success-snackbar {
+.snackbar-success {
   --mdc-snackbar-container-color: var(--success) !important;
   --mdc-snackbar-supporting-text-color: white !important;
+  --mat-snack-bar-button-color: white !important;
 }
 
-.error-snackbar {
+.snackbar-error {
   --mdc-snackbar-container-color: var(--error) !important;
   --mdc-snackbar-supporting-text-color: white !important;
+  --mat-snack-bar-button-color: white !important;
 }
 
-.warning-snackbar {
+.snackbar-warning {
   --mdc-snackbar-container-color: var(--warning) !important;
   --mdc-snackbar-supporting-text-color: white !important;
+  --mat-snack-bar-button-color: white !important;
 }
 
-.info-snackbar {
+.snackbar-info {
   --mdc-snackbar-container-color: var(--info) !important;
   --mdc-snackbar-supporting-text-color: white !important;
+  --mat-snack-bar-button-color: white !important;
 }
 
 /* Scrollbar */

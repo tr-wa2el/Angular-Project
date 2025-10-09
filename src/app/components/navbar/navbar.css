@@ -98,6 +98,59 @@
   opacity: 0.6;
 }
 
+.wishlist-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wishlist-link svg {
+  transition: all 0.3s ease;
+}
+
+.wishlist-link:hover svg {
+  fill: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.wishlist-badge {
+  position: absolute;
+  top: -4px;
+  right: 8px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 0 5px;
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.wishlist-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
 .nav-link.disabled:hover {
   background: none;
   color: var(--text-secondary);

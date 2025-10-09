@@ -1,29 +1,42 @@
-import { Component, Input, inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Input, inject, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Movie } from '../../../models/movie.model';
 import { MovieService } from '../../../services/movie.service';
+import { WishlistService } from '../../../services/wishlist.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MatSnackBarModule],
   templateUrl: './movie-card.html',
   styleUrl: './movie-card.css'
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit, OnDestroy {
   @Input() movie!: Movie;
   @Input() showActions: boolean = true;
 
   private movieService = inject(MovieService);
-  private platformId = inject(PLATFORM_ID);
-  private isBrowser = isPlatformBrowser(this.platformId);
+  private wishlistService = inject(WishlistService);
+  private snackBar = inject(MatSnackBar);
 
   isInWishlist: boolean = false;
   imageLoaded: boolean = false;
+  private wishlistSubscription?: Subscription;
 
   ngOnInit(): void {
     // Check if movie is in wishlist
     this.checkWishlistStatus();
+    
+    // Subscribe to wishlist changes
+    this.wishlistSubscription = this.wishlistService.wishlist$.subscribe(() => {
+      this.checkWishlistStatus();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.wishlistSubscription?.unsubscribe();
   }
 
   get posterUrl(): string {
@@ -63,48 +76,25 @@ export class MovieCardComponent {
     event.preventDefault();
     event.stopPropagation();
 
-    this.isInWishlist = !this.isInWishlist;
-
-    if (this.isInWishlist) {
-      this.addToWishlist();
+    const wasAdded = this.wishlistService.toggleWishlist(this.movie.id);
+    
+    if (wasAdded) {
+      this.showNotification(`${this.movie.title} added to wishlist ❤️`, 'success');
     } else {
-      this.removeFromWishlist();
+      this.showNotification(`${this.movie.title} removed from wishlist`, 'info');
     }
   }
 
   private checkWishlistStatus(): void {
-    const wishlist = this.getWishlistFromStorage();
-    this.isInWishlist = wishlist.some(id => id === this.movie.id);
+    this.isInWishlist = this.wishlistService.isInWishlist(this.movie.id);
   }
 
-  private addToWishlist(): void {
-    const wishlist = this.getWishlistFromStorage();
-    if (!wishlist.includes(this.movie.id)) {
-      wishlist.push(this.movie.id);
-      this.saveWishlistToStorage(wishlist);
-      // TODO: Show success notification
-      console.log('Added to wishlist:', this.movie.title);
-    }
-  }
-
-  private removeFromWishlist(): void {
-    let wishlist = this.getWishlistFromStorage();
-    wishlist = wishlist.filter(id => id !== this.movie.id);
-    this.saveWishlistToStorage(wishlist);
-    // TODO: Show info notification
-    console.log('Removed from wishlist:', this.movie.title);
-  }
-
-  private getWishlistFromStorage(): number[] {
-    if (!this.isBrowser) return [];
-    const wishlist = localStorage.getItem('movieWishlist');
-    return wishlist ? JSON.parse(wishlist) : [];
-  }
-
-  private saveWishlistToStorage(wishlist: number[]): void {
-    if (!this.isBrowser) return;
-    localStorage.setItem('movieWishlist', JSON.stringify(wishlist));
-    // Dispatch custom event to update wishlist counter in navbar
-    window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail: { count: wishlist.length } }));
+  private showNotification(message: string, type: 'success' | 'info' | 'error'): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      panelClass: [`snackbar-${type}`]
+    });
   }
 }
