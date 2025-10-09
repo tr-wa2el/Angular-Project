@@ -16,6 +16,14 @@ export class LoginComp implements OnInit {
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    // Check if user is already logged in
+    this.auth.authState$.subscribe(user => {
+      if (user) {
+        console.log('✅ User already logged in, redirecting to home...');
+        this.router.navigate(['/']);
+      }
+    });
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

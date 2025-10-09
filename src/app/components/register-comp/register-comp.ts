@@ -20,6 +20,14 @@ export class RegisterComp implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Check if user is already logged in
+    this.auth.authState$.subscribe(user => {
+      if (user) {
+        console.log('✅ User already logged in, redirecting to home...');
+        this.router.navigate(['/']);
+      }
+    });
+
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required]],

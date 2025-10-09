@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   wishlistCount = 0;
   isLoggedIn = false;
   private wishlistSubscription?: Subscription;
+  private authSubscription?: Subscription;
 
   ngOnInit(): void {
     // Subscribe to wishlist count changes
@@ -32,12 +33,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.wishlistCount = count;
     });
 
-    // Check if user is logged in
-    this.checkLoginStatus();
+    // Subscribe to auth state changes
+    this.authSubscription = this.auth.authState$.subscribe(user => {
+      this.isLoggedIn = user !== null;
+      console.log('🔐 Auth state changed:', user ? 'Logged in' : 'Logged out');
+    });
   }
 
   ngOnDestroy(): void {
     this.wishlistSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
   }
 
   onSearch(event: Event): void {
@@ -54,11 +59,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleMobileMenu(): void {
     this.showMobileMenu = !this.showMobileMenu;
-  }
-
-  checkLoginStatus(): void {
-    // Check if user is logged in by checking current user
-    this.isLoggedIn = this.auth.user !== null;
   }
 
   onAuthAction(): void {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User } from '@angular/fire/auth';
+import { Auth, User, authState } from '@angular/fire/auth';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,8 +12,13 @@ import { from, Observable, catchError, map, throwError, switchMap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  // Observable that emits when auth state changes
+  public authState$: Observable<User | null>;
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth) {
+    // Create observable for auth state changes
+    this.authState$ = authState(this.auth);
+  }
 
   // ✅ Register
   register(email: string, password: string, displayName: string): Observable<User> {
