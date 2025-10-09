@@ -28,6 +28,24 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
+    path: 'popular',
+    loadComponent: () => import('./pages/popular/popular').then(m => m.PopularComponent),
+    title: 'Popular Movies - Movie App',
+    runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'top-rated',
+    loadComponent: () => import('./pages/top-rated/top-rated').then(m => m.TopRatedComponent),
+    title: 'Top Rated Movies - Movie App',
+    runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'upcoming',
+    loadComponent: () => import('./pages/upcoming/upcoming').then(m => m.UpcomingComponent),
+    title: 'Upcoming Movies - Movie App',
+    runGuardsAndResolvers: 'always'
+  },
+  {
     path:'login',
     component : LoginComp,
     title:"Login"

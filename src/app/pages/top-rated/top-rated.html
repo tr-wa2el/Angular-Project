@@ -1,0 +1,148 @@
+<div class="top-rated-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="36" height="36">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/>
+        </svg>
+        Top Rated Movies
+      </h1>
+      <p class="page-subtitle">Highest rated movies of all time</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Loading State with Skeleton -->
+    <div *ngIf="isLoading" class="movies-grid">
+      <div *ngFor="let item of skeletonArray" class="skeleton-card">
+        <div class="skeleton-poster"></div>
+        <div class="skeleton-info">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-year"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <div class="error-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+      </div>
+      <h2>Oops! Something went wrong</h2>
+      <p>{{ error }}</p>
+      <button class="btn-primary" (click)="loadMovies(currentPage)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Try Again
+      </button>
+    </div>
+
+    <!-- Movies Grid -->
+    <div *ngIf="!isLoading && !error && movies.length > 0" class="movies-section">
+      <div class="movies-grid fade-in">
+        <app-movie-card
+          *ngFor="let movie of movies"
+          [movie]="movie"
+        ></app-movie-card>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container">
+        <div class="pagination">
+          <!-- Previous Button -->
+          <button
+            class="pagination-btn pagination-prev"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+            aria-label="Previous page"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            <span class="pagination-text">Previous</span>
+          </button>
+
+          <!-- Page Numbers -->
+          <div class="pagination-numbers">
+            <button
+              *ngIf="getPageNumbers()[0] > 1"
+              class="pagination-number"
+              (click)="onPageChange(1)"
+            >
+              1
+            </button>
+
+            <span *ngIf="getPageNumbers()[0] > 2" class="pagination-ellipsis">...</span>
+
+            <button
+              *ngFor="let page of getPageNumbers()"
+              class="pagination-number"
+              [class.active]="page === currentPage"
+              (click)="onPageChange(page)"
+            >
+              {{ page }}
+            </button>
+
+            <span *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1" class="pagination-ellipsis">...</span>
+
+            <button
+              *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages"
+              class="pagination-number"
+              (click)="onPageChange(totalPages)"
+            >
+              {{ totalPages }}
+            </button>
+          </div>
+
+          <!-- Next Button -->
+          <button
+            class="pagination-btn pagination-next"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+            aria-label="Next page"
+          >
+            <span class="pagination-text">Next</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Page Info -->
+        <div class="page-info">
+          <p>Page <strong>{{ currentPage }}</strong> of <strong>{{ totalPages }}</strong></p>
+          <p class="results-count">{{ totalResults | number }} movies</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !error && movies.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/>
+        </svg>
+      </div>
+      <h2>No top rated movies found</h2>
+      <p>We couldn't find any top rated movies at the moment.</p>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button
+    class="back-to-top"
+    (click)="scrollToTop()"
+    [class.visible]="!isLoading"
+    aria-label="Back to top"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+    </svg>
+  </button>
+</div>
