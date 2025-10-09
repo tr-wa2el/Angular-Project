@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
@@ -14,10 +12,9 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
   templateUrl: './top-rated.html',
   styleUrl: './top-rated.css'
 })
-export class TopRatedComponent implements OnInit, OnDestroy {
+export class TopRatedComponent implements OnInit {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
-  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private cdr = inject(ChangeDetectorRef);
@@ -34,21 +31,10 @@ export class TopRatedComponent implements OnInit, OnDestroy {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
-  // Route subscription
-  private routeSubscription?: Subscription;
-
   ngOnInit(): void {
     this.titleService.setTitle('Top Rated Movies | Movie App');
-
-    // Subscribe to route params (fires on every navigation to this route)
-    this.routeSubscription = this.route.params.subscribe(() => {
-      console.log('⭐ Top Rated route activated, loading movies...');
-      this.loadMovies();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSubscription?.unsubscribe();
+    console.log('⭐ Top Rated route activated, loading movies...');
+    this.loadMovies();
   }
 
   loadMovies(page: number = 1): void {

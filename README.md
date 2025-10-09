@@ -4,27 +4,6 @@
 |-------|-----------|--------|-------------|
 | `/` or `/home` | HomeComponent |### 📊 Feature Implementation Status:
 
-| Feature | Status | Lead Developer |
-|---------|--------|----------------|
-| 🏗️ **Project Foundation** | ✅ Complete | Wael Mohamed Abosamra |
-| 🏠 **Home Page (Now Playing)** | ✅ Complete | Wael Mohamed Abosamra |
-| 🎯 **Popular Movies** | ✅ Complete | Wael Mohamed Abosamra |
-| ⭐ **Top Rated Movies** | ✅ Complete | Wael Mohamed Abosamra |
-| 📅 **Upcoming Movies** | ✅ Complete | Wael Mohamed Abosamra |
-| 🎬 **Movie Details** | ✅ Complete | Wael Mohamed Abosamra |
-| ❤️ **Wishlist System** | ✅ Complete | Wael Mohamed Abosamra |
-| 🔐 **Authentication** | ✅ Complete | Rawan Ahmed Abd Elaziz |
-| 🎨 **Theme System** | ✅ Complete | Wael Mohamed Abosamra |
-| 📱 **Responsive Design** | ✅ Complete | Wael Mohamed Abosamra |
-| 🔔 **Notifications** | ✅ Complete | Wael Mohamed Abosamra |laying movies with pagination |
-| `/popular` | PopularComponent | ✅ Live | Most popular movies right now |
-| `/top-rated` | TopRatedComponent | ✅ Live | Highest rated movies of all time |
-| `/upcoming` | UpcomingComponent | ✅ Live | Movies coming soon to theaters |
-| `/movie/:id` | MovieDetailsComponent | ✅ Live | Complete movie details, trailer, cast |
-| `/wishlist` | WishlistComponent | ✅ Live | Personal movie collection |
-| `/login` | LoginComponent | ✅ Live | Firebase authentication |
-| `/register` | RegisterComponent | ✅ Live | User registration |
-| `/accdetails` | AccountDetailsComponent | ✅ Live | User profile (protected) |gular Application
 
 ## 🚀 Project Status: Production Ready!
 
@@ -197,16 +176,16 @@ ng test
 | Feature | Status | Lead Developer |
 |---------|--------|----------------|
 | 🏗️ **Project Foundation** | ✅ Complete | Wael Mohamed Abosamra |
-| 🏠 **Home Page (Now Playing)** | ✅ Complete | Wael Mohamed Abosamra |
-| 🎬 **Movie Details** | ✅ Complete | Wael Mohamed Abosamra |
+| 🏠 **Home Page (Now Playing)** | ✅ Complete | Hossam Abd Ehamid Abd Elghaffar |
+| 🎬 **Movie Details** | ✅ Complete | Hossam Abd Ehamid Abd Elghaffar |
 | ❤️ **Wishlist System** | ✅ Complete | Wael Mohamed Abosamra |
-| 🔐 **Authentication** | ✅ Complete | Wael Mohamed Abosamra |
+| 🔐 **Authentication** | ✅ Complete | Rawan Ahmed Abd Elaziz |
 | 🎨 **Theme System** | ✅ Complete | Wael Mohamed Abosamra |
 | 📱 **Responsive Design** | ✅ Complete | Wael Mohamed Abosamra |
 | 🔔 **Notifications** | ✅ Complete | Wael Mohamed Abosamra |
-| 🎯 **Popular Movies** | 🔄 Coming Soon | Hossam Abd Ehamid |
-| ⭐ **Top Rated** | 🔄 Coming Soon | Hossam Abd Ehamid |
-| 📅 **Upcoming Movies** | 🔄 Coming Soon | Hossam Abd Ehamid |
+| 🎯 **Popular Movies** |  ✅ Complete | Hossam Abd Ehamid |
+| ⭐ **Top Rated** |  ✅ Complete | Wael Mohamed Abosamra |
+| 📅 **Upcoming Movies** |  ✅ Complete | Wael Mohamed Abosamra |
 | 🔍 **Search Feature** | 🔄 Coming Soon | Rawan Ahmed Abd Elaziz |
 | 🎛️ **Advanced Filters** | 🔄 Coming Soon | Rawan Ahmed Abd Elaziz |
 | 🌍 **Multi-Language** | 🔄 Coming Soon | Rawan Ahmed Abd Elaziz |
