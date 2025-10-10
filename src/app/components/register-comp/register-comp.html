@@ -10,8 +10,8 @@
             <polyline points="17 11 19 13 23 9"></polyline>
           </svg>
         </div>
-        <h2 class="auth-title">Create Account</h2>
-        <p class="auth-subtitle">Join us and start your journey</p>
+        <h2 class="auth-title">{{ 'register.title' | translate }}</h2>
+        <p class="auth-subtitle">{{ 'register.subtitle' | translate }}</p>
       </div>
 
       <!-- Form -->
@@ -23,19 +23,19 @@
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            Email Address
+            {{ 'register.email' | translate }}
           </label>
           <input
             type="email"
             id="email"
             formControlName="email"
             class="form-control"
-            placeholder="you@example.com"
+            [placeholder]="'register.emailPlaceholder' | translate"
             autocomplete="email"
           />
           <div class="error-message" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
-            <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
-            <small *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</small>
+            <small *ngIf="registerForm.get('email')?.errors?.['required']">{{ 'register.emailRequired' | translate }}</small>
+            <small *ngIf="registerForm.get('email')?.errors?.['email']">{{ 'register.emailInvalid' | translate }}</small>
           </div>
         </div>
 
@@ -46,18 +46,18 @@
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
-            Full Name
+            {{ 'register.name' | translate }}
           </label>
           <input
             type="text"
             id="name"
             formControlName="name"
             class="form-control"
-            placeholder="John Doe"
+            [placeholder]="'register.namePlaceholder' | translate"
             autocomplete="name"
           />
           <div class="error-message" *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)">
-            <small *ngIf="registerForm.get('name')?.errors?.['required']">Name is required</small>
+            <small *ngIf="registerForm.get('name')?.errors?.['required']">{{ 'register.nameRequired' | translate }}</small>
           </div>
         </div>
 
@@ -93,20 +93,20 @@
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            Password
+            {{ 'register.password' | translate }}
           </label>
           <input
             type="password"
             id="password"
             formControlName="password"
             class="form-control"
-            placeholder="Create a strong password"
+            [placeholder]="'register.passwordPlaceholder' | translate"
             autocomplete="new-password"
           />
           <div class="error-message" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
-            <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</small>
+            <small *ngIf="registerForm.get('password')?.errors?.['required']">{{ 'register.passwordRequired' | translate }}</small>
             <small *ngIf="registerForm.get('password')?.errors?.['weakPassword']">
-              Must be 8+ chars with uppercase, lowercase, number & special char (@*%$#)
+              {{ 'register.passwordWeak' | translate }}
             </small>
           </div>
         </div>
@@ -118,18 +118,18 @@
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            Confirm Password
+            {{ 'register.confirmPassword' | translate }}
           </label>
           <input
             type="password"
             id="confirmPassword"
             formControlName="confirmPassword"
             class="form-control"
-            placeholder="Re-enter your password"
+            [placeholder]="'register.confirmPasswordPlaceholder' | translate"
             autocomplete="new-password"
           />
           <div class="error-message" *ngIf="(registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) && registerForm.errors?.['passwordsMismatch']">
-            <small>Passwords do not match</small>
+            <small>{{ 'register.passwordMismatch' | translate }}</small>
           </div>
         </div>
 
@@ -139,16 +139,15 @@
           class="btn-auth btn-primary"
           [disabled]="registerForm.invalid"
           [class.btn-loading]="registerForm.invalid">
-          <span *ngIf="!registerForm.invalid">Create Account</span>
-          <span *ngIf="registerForm.invalid">Please fill all fields correctly</span>
+          <span>{{ 'register.registerButton' | translate }}</span>
         </button>
       </form>
 
       <!-- Footer -->
       <div class="auth-footer">
         <p class="auth-footer-text">
-          Already have an account?
-          <a routerLink="/login" class="auth-link">Sign In</a>
+          {{ 'register.haveAccount' | translate }}
+          <a routerLink="/login" class="auth-link">{{ 'register.signIn' | translate }}</a>
         </p>
       </div>
     </div>

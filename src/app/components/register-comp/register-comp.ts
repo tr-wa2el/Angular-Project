@@ -3,10 +3,11 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { AuthService } from '../../shared/authservice';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-register-comp',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, TranslatePipe],
   templateUrl: './register-comp.html',
   styleUrls: ['./register-comp.css']
 })
