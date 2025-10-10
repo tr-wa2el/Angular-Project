@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   private titleService = inject(Title);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
-  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -33,7 +32,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Now Playing Movies | Movie App');
-    console.log('🏠 Route activated, loading movies...');
     this.loadMovies();
   }
 
@@ -53,20 +51,15 @@ export class HomeComponent implements OnInit {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
-        // Force Angular to detect changes
-        this.cdr.detectChanges();
-        console.log('🔄 Home: Change detection triggered');
-
         // Scroll to top
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       },
       error: (err) => {
-        console.error('Error loading movies:', err);
+        console.error('❌ Error loading movies:', err);
         this.error = 'Failed to load movies. Please try again later.';
         this.isLoading = false;
-        this.cdr.detectChanges();
       }
     });
   }

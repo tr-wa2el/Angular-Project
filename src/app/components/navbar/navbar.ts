@@ -36,7 +36,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Subscribe to auth state changes
     this.authSubscription = this.auth.authState$.subscribe(user => {
       this.isLoggedIn = user !== null;
-      console.log('🔐 Auth state changed:', user ? 'Logged in' : 'Logged out');
     });
   }
 

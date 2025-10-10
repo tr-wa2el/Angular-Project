@@ -6,7 +6,7 @@ import {
   signOut,
   updateProfile
 } from 'firebase/auth';
-import { from, Observable, catchError, map, throwError, switchMap } from 'rxjs';
+import { from, Observable, catchError, map, throwError, switchMap, distinctUntilChanged, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,16 @@ export class AuthService {
   public authState$: Observable<User | null>;
 
   constructor(private auth: Auth) {
-    // Create observable for auth state changes
-    this.authState$ = authState(this.auth);
+    // Create observable for auth state changes with distinctUntilChanged to prevent duplicate emissions
+    this.authState$ = authState(this.auth).pipe(
+      distinctUntilChanged((prev, curr) => {
+        // Compare user UIDs to detect actual changes
+        const prevUid = prev?.uid || null;
+        const currUid = curr?.uid || null;
+        return prevUid === currUid;
+      }),
+      shareReplay(1) // Share last emitted value with new subscribers
+    );
   }
 
   // ✅ Register
