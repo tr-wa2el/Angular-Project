@@ -37,11 +37,19 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server
   },
   {
-    path: 'search-results',
+    path: 'search',
     renderMode: RenderMode.Server
   },
   {
-    path: 'genremovies/:id',
+    path: 'genremovie',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'movies',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'filteredmovi',
     renderMode: RenderMode.Server
   },
 
