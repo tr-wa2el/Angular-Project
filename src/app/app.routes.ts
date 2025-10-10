@@ -44,6 +44,12 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
+    path: 'genremovie',
+    loadComponent: () => import('./components/genremovies/genremovies').then(m => m.Genremovies),
+    title: 'My Genre Movie - Movie App',
+    runGuardsAndResolvers: 'always'
+  },
+  {
     path: 'upcoming',
     loadComponent: () => import('./pages/upcoming/upcoming').then(m => m.UpcomingComponent),
     title: 'Upcoming Movies - Movie App',

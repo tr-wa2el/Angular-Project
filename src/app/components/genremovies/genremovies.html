@@ -1,0 +1,110 @@
+<div class="home-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Explore Movies by Genre</h1>
+      <p class="page-subtitle">Discover the latest movies in theaters</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Filters -->
+    <div class="filters">
+      <!-- Genre Filter -->
+      <div class="genre-filter" *ngIf="genres.length > 0">
+        <label for="genreSelect">Filter by Genre:</label>
+        <select id="genreSelect" (change)="onSelectGenre($event)">
+          <option [value]="null">All Genres</option>
+          <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+        </select>
+      </div>
+
+      <!-- Sorting Filter -->
+      <div class="sort-filter">
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect" [(ngModel)]="selectedSort" (change)="onSortChange()">
+          <option [value]="null">Default</option>
+          <option value="popular">Popularity</option>
+          <option value="release_date">Release Date</option>
+          <option value="top_rated">Rating</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div *ngIf="isLoading" class="movies-grid">
+      <div *ngFor="let item of skeletonArray" class="skeleton-card">
+        <div class="skeleton-poster"></div>
+        <div class="skeleton-info">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-year"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <div class="error-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+        </svg>
+      </div>
+      <h2>Oops! Something went wrong</h2>
+      <p>{{ error }}</p>
+      <button class="btn-primary" (click)="loadMovies(currentPage)">Try Again</button>
+    </div>
+
+    <!-- Movies Grid -->
+    <div *ngIf="!isLoading && !error && movies.length > 0" class="movies-section">
+      <div class="movies-grid fade-in">
+        <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+      </div>
+
+      <!-- Pagination (الأصلي كما عندك) -->
+      <div class="pagination-container">
+        <div class="pagination">
+          <!-- Previous Button -->
+          <button class="pagination-btn pagination-prev" [disabled]="currentPage === 1" (click)="previousPage()">
+            <span class="pagination-text">Previous</span>
+          </button>
+
+          <!-- Page Numbers -->
+          <button *ngIf="getPageNumbers()[0] > 1" class="pagination-number" (click)="onPageChange(1)">1</button>
+          <span *ngIf="getPageNumbers()[0] > 2" class="pagination-ellipsis">...</span>
+          <button *ngFor="let page of getPageNumbers()" class="pagination-number" [class.active]="page === currentPage" (click)="onPageChange(page)">
+            {{ page }}
+          </button>
+          <span *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1" class="pagination-ellipsis">...</span>
+          <button *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages" class="pagination-number" (click)="onPageChange(totalPages)">
+            {{ totalPages }}
+          </button>
+
+          <!-- Next Button -->
+          <button class="pagination-btn pagination-next" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            <span class="pagination-text">Next</span>
+          </button>
+        </div>
+
+        <!-- Page Info -->
+        <div class="page-info">
+          <p>Page <strong>{{ currentPage }}</strong> of <strong>{{ totalPages }}</strong></p>
+          <p class="results-count">{{ totalResults | number }} movies</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !error && movies.length === 0" class="empty-state">
+      <h2>No movies found</h2>
+      <p>We couldn't find any movies at the moment.</p>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" (click)="scrollToTop()" [class.visible]="!isLoading" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+    </svg>
+  </button>
+</div>

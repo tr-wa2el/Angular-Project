@@ -1,10 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
-import { Movie, MovieListResponse, MovieCreditsResponse, MovieVideosResponse, MovieRecommendationsResponse } from '../models/movie.model';
+import {
+  Movie,
+  MovieListResponse,
+  MovieCreditsResponse,
+  MovieVideosResponse,
+  MovieRecommendationsResponse,
+} from '../models/movie.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovieService {
   private apiService = inject(ApiService);
@@ -13,90 +19,90 @@ export class MovieService {
    * Get now playing movies
    */
   getNowPlayingMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.getNowPlayingMovies(page, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService
+      .getNowPlayingMovies(page, language)
+      .pipe(map((response) => response.data));
   }
 
   /**
    * Get popular movies
    */
   getPopularMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.getPopularMovies(page, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getPopularMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get top rated movies
    */
   getTopRatedMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.getTopRatedMovies(page, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getTopRatedMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get upcoming movies
    */
   getUpcomingMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.getUpcomingMovies(page, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getUpcomingMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get movie details by ID
    */
   getMovieDetails(id: number, language: string = 'en-US'): Observable<Movie> {
-    return this.apiService.getMovieDetails(id, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getMovieDetails(id, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get movie credits (cast & crew)
    */
   getMovieCredits(id: number): Observable<MovieCreditsResponse> {
-    return this.apiService.getMovieCredits(id).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getMovieCredits(id).pipe(map((response) => response.data));
   }
 
   /**
    * Get movie videos (trailers, teasers, etc.)
    */
   getMovieVideos(id: number, language: string = 'en-US'): Observable<MovieVideosResponse> {
-    return this.apiService.getMovieVideos(id, language).pipe(
-      map(response => response.data)
-    );
+    return this.apiService.getMovieVideos(id, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get recommended movies for a specific movie
    */
-  getMovieRecommendations(id: number, page: number = 1, language: string = 'en-US'): Observable<MovieRecommendationsResponse> {
-    return this.apiService.getMovieRecommendations(id, page, language).pipe(
-      map(response => response.data)
-    );
+  getMovieRecommendations(
+    id: number,
+    page: number = 1,
+    language: string = 'en-US'
+  ): Observable<MovieRecommendationsResponse> {
+    return this.apiService
+      .getMovieRecommendations(id, page, language)
+      .pipe(map((response) => response.data));
   }
 
   /**
    * Search movies by query
    */
-  searchMovies(query: string, page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.searchMovies(query, page, language).pipe(
-      map(response => response.data)
-    );
+  searchMovies(
+    query: string,
+    page: number = 1,
+    language: string = 'en-US'
+  ): Observable<MovieListResponse> {
+    return this.apiService
+      .searchMovies(query, page, language)
+      .pipe(map((response) => response.data));
   }
 
   /**
    * Get movies by genre
    */
-  getMoviesByGenre(genreId: number, page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
-    return this.apiService.getMoviesByGenre(genreId, page, language).pipe(
-      map(response => response.data)
-    );
+  getMoviesByGenre(
+    genreId: number,
+    page: number = 1,
+    language: string = 'en-US'
+  ): Observable<MovieListResponse> {
+    return this.apiService
+      .getMoviesByGenre(genreId, page, language)
+      .pipe(map((response) => response.data));
   }
 
   /**
@@ -139,7 +145,7 @@ export class MovieService {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   }
 
@@ -160,16 +166,25 @@ export class MovieService {
 
     // Try to find official trailer
     const officialTrailer = videos.results.find(
-      video => video.type === 'Trailer' && video.official && video.site === 'YouTube'
+      (video) => video.type === 'Trailer' && video.official && video.site === 'YouTube'
     );
 
     if (officialTrailer) return officialTrailer;
 
     // Fallback to any trailer
     const anyTrailer = videos.results.find(
-      video => video.type === 'Trailer' && video.site === 'YouTube'
+      (video) => video.type === 'Trailer' && video.site === 'YouTube'
     );
 
     return anyTrailer || null;
   }
+
+  /**
+   * Get list of movie genres
+   */
+  getGenres(language: string = 'en-US'): Observable<{ genres: { id: number; name: string }[] }> {
+    return this.apiService.getGenres(language).pipe(map((response) => response.data));
+  }
+
+  
 }
