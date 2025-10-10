@@ -6,11 +6,12 @@ import { MovieService } from '../../services/movie.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { Movie, MovieVideo, CastMember, MovieRecommendationsResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
+import { BackToTopComponent } from '../../shared/components/back-to-top/back-to-top.component';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent],
+  imports: [CommonModule, MovieCardComponent, BackToTopComponent],
   templateUrl: './movie-details.html',
   styleUrl: './movie-details.css'
 })
