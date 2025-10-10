@@ -6,7 +6,8 @@
   z-index: 1000;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */ /* Removed - prevents language menu from showing */
+  overflow: visible; /* Allow menus to show */
 }
 
 .container {
@@ -18,7 +19,9 @@
   gap: 24px;
   height: 64px;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
+  overflow: visible; /* Allow language menu to show */
 }
 
 .navbar-brand {
@@ -87,11 +90,14 @@
   gap: 16px;
   flex-shrink: 0; /* Prevent actions from shrinking */
   flex-wrap: nowrap; /* Prevent wrapping */
+  overflow: visible; /* Allow language menu to show */
+  position: relative;
 }
 
 /* Language Selector */
 .language-selector {
   position: relative;
+  z-index: 1002; /* Higher than navbar */
 }
 
 .language-btn {
@@ -99,6 +105,8 @@
   align-items: center;
   gap: 4px;
   padding: 8px 12px !important;
+  position: relative;
+  z-index: 1003;
 }
 
 .language-code {
@@ -115,8 +123,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   min-width: 200px;
-  overflow: hidden;
-  z-index: 1001;
+  overflow: visible;
+  z-index: 1004;
+  display: block; /* Ensure it's displayed */
 }
 
 .language-option {
@@ -407,16 +416,21 @@
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    overflow-x: hidden;
-  }
+  /* Note: Don't add overflow-x: hidden to .navbar - it hides language menu */
 
   .container {
     padding: 0 8px;
     gap: 6px;
     height: 56px;
     max-width: 100%;
+    overflow: visible;
+  }
+
+  /* Prevent individual items from overflowing */
+  .navbar-brand .logo {
+    max-width: 150px;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .navbar-brand .logo {
@@ -472,8 +486,11 @@
   }
 
   .language-menu {
-    right: 0;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
     min-width: 180px;
+    max-width: 90vw;
   }
 
   .mobile-menu-toggle {
