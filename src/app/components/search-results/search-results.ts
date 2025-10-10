@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule, DecimalPipe, isPlatformBrowser } from '@angular/common';
@@ -22,7 +22,6 @@ export class SearchResults implements OnInit {
   private titleService = inject(Title);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
-  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   searchQuery: string = '';
@@ -70,14 +69,11 @@ export class SearchResults implements OnInit {
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('❌ Search error:', err);
         this.error = 'Failed to load search results. Please try again later.';
         this.isLoading = false;
-        this.cdr.detectChanges();
       }
     });
   }
