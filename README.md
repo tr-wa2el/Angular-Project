@@ -185,7 +185,7 @@ ng test
 | 10 | 📅 **Upcoming Movies Page** | ✅ Complete | Wael Mohamed Abosamra | 4 hours | 4 hours | ±0h |
 | 11 | 🎞️ **Movie Card Component** | ✅ Complete | Wael Mohamed Abosamra | 3 hours | 3.5 hours | +0.5h |
 | 12 | ⚡ **Skeleton Loading States** | ✅ Complete | Wael Mohamed Abosamra | 2 hours | 3 hours | +1h |
-| 13 | 🔢 **Pagination Component** | ✅ Complete | Wael Mohamed Abosamra | 3 hours | 3.5 hours | +0.5h |
+| 13 | 🔢 **Pagination Component** | ✅ Complete | Rawan Ahmed Abd Elaziz | 3 hours | 3.5 hours | +0.5h |
 | 14 | ❤️ **Wishlist Service & State Management** | ✅ Complete | Wael Mohamed Abosamra | 5 hours | 6 hours | +1h |
 | 15 | 📋 **Wishlist Page UI** | ✅ Complete | Mohammed Hussein | 4 hours | 5 hours | +1h |
 | 16 | 💾 **LocalStorage Persistence** | ✅ Complete | Wael Mohamed Abosamra | 2 hours | 2 hours | ±0h |
@@ -195,7 +195,7 @@ ng test
 | 20 | ✍️ **Register Component** | ✅ Complete | Rawan Ahmed | 4 hours | 5 hours | +1h |
 | 21 | 👤 **Account Details Page** | ✅ Complete | Rawan Ahmed | 3 hours | 4 hours | +1h |
 | 22 | 🛡️ **Route Guards & Protected Routes** | ✅ Complete | Rawan Ahmed | 2 hours | 3 hours | +1h |
-| 23 | 🔄 **Real-time Auth State Sync** | ✅ Complete | Wael Mohamed Abosamra | 3 hours | 4 hours | +1h |
+| 23 | 🔄 **Real-time Auth State Sync** | ✅ Complete | Rawan Ahmed Abd Elaziz | 3 hours | 4 hours | +1h |
 | 24 | 🔍 **Search Functionality** | ✅ Complete | Rawan Ahmed | 6 hours | 7 hours | +1h |
 | 25 | 🎛️ **Advanced Filters (Genre/Year)** | ✅ Complete | Rawan Ahmed | 5 hours | 6 hours | +1h |
 | 26 | 🌍 **Multi-Language Support (i18n)** | ✅ Complete | Rawan Ahmed | 8 hours | 10 hours | +2h |
@@ -231,9 +231,9 @@ ng test
 
 | Developer | Features | Estimated Time | Actual Time | Completion % |
 |-----------|----------|----------------|-------------|--------------|
-| **Wael Mohamed Abosamra** | 22 features | 30 hours | 39 hours | 54.7% |
-| **Rawan Ahmed Abd Elaziz** | 10 features | 16 hours | 20 hours | 27.9% |
-| **Hossam Abd Ehamid** | 6 features | 8 hours | 13 hours | 17.4% |
+| **Wael Mohamed Abosamra** | 20 features | 24 hours | 31.5 hours | 43.8% |
+| **Rawan Ahmed Abd Elaziz** | 12 features | 22 hours | 27.5 hours | 38.2% |
+| **Hossam Abd Ehamid** | 6 features | 8 hours | 13 hours | 18.0% |
 | **Mohammed Hussein** | 2 features | - hours | - hours | - |
 
 #### 📈 **Key Insights:**
