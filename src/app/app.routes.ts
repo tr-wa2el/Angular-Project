@@ -17,7 +17,6 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home').then((m) => m.HomeComponent),
     title: 'Home - Movie App',
-    runGuardsAndResolvers: 'always',
   },
   {
     path: 'movie/:id',
@@ -29,31 +28,26 @@ export const routes: Routes = [
     path: 'wishlist',
     loadComponent: () => import('./pages/wishlist/wishlist').then((m) => m.WishlistComponent),
     title: 'My Wishlist - Movie App',
-    runGuardsAndResolvers: 'always',
   },
   {
     path: 'popular',
     loadComponent: () => import('./pages/popular/popular').then(m => m.PopularComponent),
     title: 'Popular Movies - Movie App',
-    runGuardsAndResolvers: 'always'
   },
   {
     path: 'top-rated',
     loadComponent: () => import('./pages/top-rated/top-rated').then(m => m.TopRatedComponent),
     title: 'Top Rated Movies - Movie App',
-    runGuardsAndResolvers: 'always'
   },
   {
     path: 'genremovie',
     loadComponent: () => import('./components/genremovies/genremovies').then(m => m.Genremovies),
     title: 'My Genre Movie - Movie App',
-    runGuardsAndResolvers: 'always'
   },
   {
     path: 'upcoming',
     loadComponent: () => import('./pages/upcoming/upcoming').then(m => m.UpcomingComponent),
     title: 'Upcoming Movies - Movie App',
-    runGuardsAndResolvers: 'always'
   },
   {
     path: 'search',
