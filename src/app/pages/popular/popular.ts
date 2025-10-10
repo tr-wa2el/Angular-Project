@@ -7,11 +7,12 @@ import { MovieService } from '../../services/movie.service';
 import { I18nService } from '../../services/i18n.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
+import { BackToTopComponent } from '../../shared/components/back-to-top/back-to-top.component';
 
 @Component({
   selector: 'app-popular',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent],
+  imports: [CommonModule, MovieCardComponent, BackToTopComponent],
   templateUrl: './popular.html',
   styleUrl: './popular.css'
 })
@@ -130,6 +131,7 @@ export class PopularComponent implements OnInit, OnDestroy {
 
   scrollToTop(): void {
     if (this.isBrowser) {
+      console.log('Scrolling to top...');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }

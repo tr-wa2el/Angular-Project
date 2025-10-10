@@ -8,3 +8,6 @@ export { ApiNodes } from '../services/api-nodes';
 
 // Types for API
 export type { ApiResponse, MovieListResponse } from '../services/api.service';
+
+// Shared Components
+export { BackToTopComponent } from './components/back-to-top/back-to-top.component';

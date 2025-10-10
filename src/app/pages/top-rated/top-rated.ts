@@ -7,11 +7,12 @@ import { MovieService } from '../../services/movie.service';
 import { I18nService } from '../../services/i18n.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
+import { BackToTopComponent } from '../../shared/components/back-to-top/back-to-top.component';
 
 @Component({
   selector: 'app-top-rated',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent],
+  imports: [CommonModule, MovieCardComponent, BackToTopComponent],
   templateUrl: './top-rated.html',
   styleUrl: './top-rated.css'
 })

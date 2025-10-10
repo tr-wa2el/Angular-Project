@@ -1,0 +1,63 @@
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: var(--primary-dark);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(229, 9, 20, 0.4);
+}
+
+.back-to-top svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* RTL Support */
+html[dir="rtl"] .back-to-top {
+  right: auto;
+  left: 32px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+  }
+
+  html[dir="rtl"] .back-to-top {
+    right: auto;
+    left: 20px;
+  }
+
+  .back-to-top svg {
+    width: 24px;
+    height: 24px;
+  }
+}
