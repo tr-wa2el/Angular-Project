@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
@@ -17,7 +17,6 @@ export class PopularComponent implements OnInit {
   private titleService = inject(Title);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
-  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -33,7 +32,6 @@ export class PopularComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Popular Movies | Movie App');
-    console.log('🔥 Popular route activated, loading movies...');
     this.loadMovies();
   }
 
@@ -49,20 +47,15 @@ export class PopularComponent implements OnInit {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
-        // Force Angular to detect changes
-        this.cdr.detectChanges();
-        console.log('🔄 Popular: Change detection triggered');
-
         // Scroll to top
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       },
       error: (err) => {
-        console.error('Error loading popular movies:', err);
+        console.error('❌ Error loading popular movies:', err);
         this.error = 'Failed to load popular movies. Please try again later.';
         this.isLoading = false;
-        this.cdr.detectChanges();
       }
     });
   }
