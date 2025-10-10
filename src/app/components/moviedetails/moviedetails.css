@@ -1,0 +1,27 @@
+.details-container {
+  max-width: 600px;
+  padding: 16px;
+  color: black !important;
+}
+
+.details-body {
+  display: flex;
+  gap: 16px;
+}
+
+.details-body img {
+  width: 40%;
+  border-radius: 8px;
+}
+
+.info {
+  flex: 1;
+}
+.info p{
+  color: rgb(130, 31, 31) !important;
+}
+
+.actions {
+  text-align: right;
+  margin-top: 16px;
+}

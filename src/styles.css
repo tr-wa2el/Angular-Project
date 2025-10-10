@@ -323,3 +323,6 @@ input, textarea, select {
 .slide-in {
   animation: slideIn 0.4s ease-out;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

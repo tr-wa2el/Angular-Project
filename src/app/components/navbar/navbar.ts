@@ -12,7 +12,7 @@ import { WishlistService } from '../../services/wishlist.service';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css'
+  styleUrl: './navbar.css',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   themeService = inject(ThemeService);
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   onSearch(event: Event): void {
     event.preventDefault();
     if (this.searchQuery.trim()) {
-      alert('Search functionality will be implemented by Search Lead (Person 4)');
+      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
       this.searchQuery = '';
     }
   }
