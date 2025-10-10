@@ -1,7 +1,10 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
+import { I18nService } from '../../services/i18n.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 
@@ -12,11 +15,14 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
+  private i18nService = inject(I18nService);
   private titleService = inject(Title);
+  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -30,13 +36,29 @@ export class HomeComponent implements OnInit {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
+  // Subscriptions
+  private routeSubscription?: Subscription;
+  private languageSubscription?: Subscription;
+
   ngOnInit(): void {
     this.titleService.setTitle('Now Playing Movies | Movie App');
-    this.loadMovies();
+
+    // Subscribe to route params changes (this fires on every navigation)
+    this.routeSubscription = this.route.params.subscribe(() => {
+      console.log('🏠 Route activated, loading movies...');
+      this.loadMovies();
+    });
+
+    // Subscribe to language changes to reload data
+    this.languageSubscription = this.i18nService.currentLanguage$.subscribe((lang) => {
+      console.log('🌍 Language changed to:', lang, '- Reloading movies...');
+      this.loadMovies(this.currentPage);
+    });
   }
 
   ngOnDestroy(): void {
-    // No subscriptions to clean up
+    this.routeSubscription?.unsubscribe();
+    this.languageSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {
@@ -51,6 +73,10 @@ export class HomeComponent implements OnInit {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Home: Change detection triggered');
+
         // Scroll to top
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -60,6 +86,7 @@ export class HomeComponent implements OnInit {
         console.error('❌ Error loading movies:', err);
         this.error = 'Failed to load movies. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }

@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
+import { I18nService } from '../../services/i18n.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 
@@ -16,10 +17,12 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
 })
 export class PopularComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
+  private i18nService = inject(I18nService);
   private titleService = inject(Title);
-  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   isLoading: boolean = true;
@@ -33,36 +36,32 @@ export class PopularComponent implements OnInit, OnDestroy {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
-  // Router subscription
-  private routerSubscription?: Subscription;
+  // Subscriptions
+  private routeSubscription?: Subscription;
+  private languageSubscription?: Subscription;
 
   ngOnInit(): void {
     this.titleService.setTitle('Popular Movies | Movie App');
 
-    // Load movies immediately
-    this.loadMovies();
+    // Subscribe to route params changes (this fires on every navigation)
+    this.routeSubscription = this.route.params.subscribe(() => {
+      console.log('🎬 Route activated, loading popular movies...');
+      this.loadMovies();
+    });
 
-    // Subscribe to router events to reload when navigating to this route
-    this.routerSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      // Only reload if we're on the popular route
-      if (event.urlAfterRedirects === '/popular') {
-        console.log('🎬 Navigation to popular detected, reloading movies...');
-        this.loadMovies(this.currentPage);
-      }
+    // Subscribe to language changes
+    this.languageSubscription = this.i18nService.currentLanguage$.subscribe((lang) => {
+      console.log('🌍 Language changed to:', lang, '- Reloading popular movies...');
+      this.loadMovies(this.currentPage);
     });
   }
 
   ngOnDestroy(): void {
-    this.routerSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.languageSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {
-    if (this.isLoading) {
-      console.log('🎬 Already loading movies, skipping...');
-      return;
-    }
     this.isLoading = true;
     this.error = null;
 
@@ -74,6 +73,10 @@ export class PopularComponent implements OnInit, OnDestroy {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Popular: Change detection triggered');
+
         // Scroll to top
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -83,6 +86,7 @@ export class PopularComponent implements OnInit, OnDestroy {
         console.error('❌ Error loading popular movies:', err);
         this.error = 'Failed to load popular movies. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }

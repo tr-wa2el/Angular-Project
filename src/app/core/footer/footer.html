@@ -7,43 +7,42 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
             <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
           </svg>
-          <span>Movie App</span>
+          <span>{{ 'app.name' | translate }}</span>
         </div>
         <p class="footer-description">
-          Discover and explore thousands of movies with detailed information,
-          ratings, and reviews. Your ultimate movie companion.
+          {{ 'footer.description' | translate }}
         </p>
       </div>
 
       <!-- Footer Links -->
       <div class="footer-links">
         <div class="footer-section">
-          <h4>Movies</h4>
+          <h4>{{ 'footer.movies' | translate }}</h4>
           <ul>
-            <li><a routerLink="/home">Now Playing</a></li>
-            <li><a routerLink="/popular">Popular Movies</a></li>
-            <li><a routerLink="/top-rated">Top Rated</a></li>
-            <li><a routerLink="/upcoming">Upcoming</a></li>
+            <li><a routerLink="/home">{{ 'nav.home' | translate }}</a></li>
+            <li><a routerLink="/popular">{{ 'nav.popular' | translate }}</a></li>
+            <li><a routerLink="/top-rated">{{ 'nav.topRated' | translate }}</a></li>
+            <li><a routerLink="/upcoming">{{ 'nav.upcoming' | translate }}</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
-          <h4>Account</h4>
+          <h4>{{ 'footer.account' | translate }}</h4>
           <ul>
-            <li><a routerLink="/login">Login</a></li>
-            <li><a routerLink="/register">Register</a></li>
-            <li><a routerLink="/wishlist">My Wishlist</a></li>
-            <li><a routerLink="/accdetails">Account Details</a></li>
+            <li><a routerLink="/login">{{ 'nav.login' | translate }}</a></li>
+            <li><a routerLink="/register">{{ 'nav.register' | translate }}</a></li>
+            <li><a routerLink="/wishlist">{{ 'footer.myWishlist' | translate }}</a></li>
+            <li><a routerLink="/accdetails">{{ 'footer.accountDetails' | translate }}</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
-          <h4>Company</h4>
+          <h4>{{ 'footer.company' | translate }}</h4>
           <ul>
-            <li><a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">About TMDB</a></li>
-            <li><a href="https://github.com/tr-wa2el/Angular-Project" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
-            <li><a href="mailto:eng.wael.abosamra@gmail.com">Contact Us</a></li>
-            <li><span class="coming-soon">Help Center (Coming Soon)</span></li>
+            <li><a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">{{ 'footer.aboutTmdb' | translate }}</a></li>
+            <li><a href="https://github.com/tr-wa2el/Angular-Project" target="_blank" rel="noopener noreferrer">{{ 'footer.github' | translate }}</a></li>
+            <li><a href="mailto:eng.wael.abosamra@gmail.com">{{ 'footer.contact' | translate }}</a></li>
+            <li><span class="coming-soon">{{ 'footer.helpCenter' | translate }} ({{ 'footer.comingSoon' | translate }})</span></li>
           </ul>
         </div>
       </div>
@@ -52,13 +51,13 @@
     <!-- Footer Bottom -->
     <div class="footer-bottom">
       <div class="footer-bottom-content">
-        <p>&copy; {{ currentYear }} Movie App. All rights reserved. Powered by
+        <p>&copy; {{ currentYear }} {{ 'app.name' | translate }}. {{ 'footer.allRights' | translate }}. {{ 'footer.poweredBy' | translate }}
           <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" class="tmdb-link">TMDB</a>
         </p>
         <div class="footer-bottom-links">
-          <a href="https://www.themoviedb.org/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <a href="https://www.themoviedb.org/privacy-policy" target="_blank" rel="noopener noreferrer">{{ 'footer.privacy' | translate }}</a>
           <span class="separator">•</span>
-          <a href="https://www.themoviedb.org/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+          <a href="https://www.themoviedb.org/terms-of-use" target="_blank" rel="noopener noreferrer">{{ 'footer.terms' | translate }}</a>
           <span class="separator">•</span>
           <a href="https://github.com/tr-wa2el/Angular-Project" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>

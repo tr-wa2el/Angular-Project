@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { Observable, of, catchError, map, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiNodes, ApiNodeKey } from './api-nodes';
+import { I18nService } from './i18n.service';
 
 export interface ApiResponse<T = any> {
   data: T;
@@ -23,6 +24,7 @@ export interface MovieListResponse {
 })
 export class ApiService {
   private http = inject(HttpClient);
+  private i18nService = inject(I18nService);
   private baseUrl = environment.tmdbApiBaseUrl;
   private apiKey = environment.tmdbApiKey;
 
@@ -41,6 +43,12 @@ export class ApiService {
   ): Observable<ApiResponse<T>> {
     // Add API key to all requests
     params = params.set('api_key', this.apiKey);
+
+    // Add language parameter if not already set
+    if (!params.has('language')) {
+      const apiLanguage = this.i18nService.getApiLanguageCode();
+      params = params.set('language', apiLanguage);
+    }
 
     // If mock mode is enabled, return mock data immediately
     if (this.useMock && nodeKey) {

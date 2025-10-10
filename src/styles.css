@@ -48,6 +48,44 @@ body.dark-mode {
   --shadow: rgba(0, 0, 0, 0.3);
 }
 
+/* RTL Support */
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] body {
+  text-align: right;
+}
+
+html[dir="rtl"] .container,
+html[dir="rtl"] .navbar-actions,
+html[dir="rtl"] .movie-grid,
+html[dir="rtl"] .movies-grid {
+  direction: rtl;
+}
+
+/* RTL specific adjustments */
+html[dir="rtl"] .logo {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .wishlist-link {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .movie-card {
+  text-align: right;
+}
+
+html[dir="rtl"] .language-menu {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] .pagination {
+  direction: ltr; /* Keep pagination LTR even in RTL */
+}
+
 body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: var(--background);

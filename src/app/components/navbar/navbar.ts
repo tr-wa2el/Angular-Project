@@ -6,28 +6,39 @@ import { Subscription } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { AuthService } from '../../shared/authservice';
 import { WishlistService } from '../../services/wishlist.service';
+import { I18nService, SupportedLanguage, LanguageConfig } from '../../services/i18n.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule, TranslatePipe],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   themeService = inject(ThemeService);
+  i18nService = inject(I18nService);
   private router = inject(Router);
   private auth = inject(AuthService);
   private wishlistService = inject(WishlistService);
 
   searchQuery = '';
   showMobileMenu = false;
+  showLanguageMenu = false;
   wishlistCount = 0;
   isLoggedIn = false;
+  currentLanguage: SupportedLanguage = 'en';
+  languages: LanguageConfig[] = [];
   private wishlistSubscription?: Subscription;
   private authSubscription?: Subscription;
+  private languageSubscription?: Subscription;
 
   ngOnInit(): void {
+    // Get supported languages
+    this.languages = this.i18nService.languages;
+    this.currentLanguage = this.i18nService.getCurrentLanguage();
+
     // Subscribe to wishlist count changes
     this.wishlistSubscription = this.wishlistService.count$.subscribe(count => {
       this.wishlistCount = count;
@@ -37,11 +48,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authSubscription = this.auth.authState$.subscribe(user => {
       this.isLoggedIn = user !== null;
     });
+
+    // Subscribe to language changes
+    this.languageSubscription = this.i18nService.currentLanguage$.subscribe(lang => {
+      this.currentLanguage = lang;
+    });
   }
 
   ngOnDestroy(): void {
     this.wishlistSubscription?.unsubscribe();
     this.authSubscription?.unsubscribe();
+    this.languageSubscription?.unsubscribe();
   }
 
   onSearch(event: Event): void {
@@ -59,6 +76,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleMobileMenu(): void {
     this.showMobileMenu = !this.showMobileMenu;
+  }
+
+  toggleLanguageMenu(): void {
+    this.showLanguageMenu = !this.showLanguageMenu;
+  }
+
+  changeLanguage(code: SupportedLanguage): void {
+    this.i18nService.setLanguage(code);
+    this.showLanguageMenu = false;
+    // No need to reload - components will automatically reload via language subscription
+  }
+
+  getCurrentLanguageConfig(): LanguageConfig {
+    return this.i18nService.getCurrentLanguageConfig();
   }
 
   onAuthAction(): void {

@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "电影应用",
+    "title": "电影数据库"
+  },
+  "nav": {
+    "home": "首页",
+    "movies": "电影",
+    "popular": "热门",
+    "topRated": "高分",
+    "upcoming": "即将上映",
+    "wishlist": "收藏",
+    "search": "搜索电影...",
+    "login": "登录",
+    "logout": "退出",
+    "register": "注册",
+    "account": "账户",
+    "language": "语言"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "retry": "重试",
+    "back": "返回",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "yes": "是",
+    "no": "否"
+  },
+  "movie": {
+    "rating": "评分",
+    "runtime": "时长",
+    "releaseDate": "上映日期",
+    "budget": "预算",
+    "revenue": "票房",
+    "overview": "简介",
+    "genres": "类型",
+    "cast": "演员",
+    "trailer": "官方预告片",
+    "recommendations": "你可能也喜欢",
+    "addToWishlist": "添加到收藏",
+    "removeFromWishlist": "从收藏中移除",
+    "inWishlist": "已收藏"
+  },
+  "home": {
+    "title": "正在上映",
+    "subtitle": "发现影院最新电影"
+  },
+  "popular": {
+    "title": "热门电影",
+    "subtitle": "当前最受欢迎的电影"
+  },
+  "topRated": {
+    "title": "高分电影",
+    "subtitle": "有史以来评分最高的电影"
+  },
+  "upcoming": {
+    "title": "即将上映",
+    "subtitle": "即将在影院上映的电影"
+  },
+  "wishlist": {
+    "title": "我的收藏",
+    "subtitle": "你最喜欢的电影集合",
+    "empty": "收藏列表为空",
+    "emptyMessage": "开始添加电影以建立您的收藏！",
+    "clearAll": "清空全部",
+    "confirmClear": "确定要清空整个收藏列表吗？",
+    "removed": "已从收藏中移除",
+    "cleared": "收藏列表已成功清空"
+  },
+  "pagination": {
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "第",
+    "of": "页，共",
+    "results": "部电影"
+  },
+  "errors": {
+    "loadFailed": "加载数据失败。请稍后重试。",
+    "noResults": "未找到电影",
+    "somethingWrong": "哎呀！出了点问题"
+  },
+  "footer": {
+    "description": "发现并探索数千部电影，包含详细信息、评分和评论。您的终极电影伴侣。",
+    "movies": "电影",
+    "account": "账户",
+    "company": "公司",
+    "aboutTmdb": "关于 TMDB",
+    "github": "GitHub 仓库",
+    "contact": "联系我们",
+    "helpCenter": "帮助中心",
+    "comingSoon": "即将推出",
+    "allRights": "版权所有",
+    "poweredBy": "技术支持",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "myWishlist": "我的收藏",
+    "accountDetails": "账户详情"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "Movie App",
+    "title": "Movie Database"
+  },
+  "nav": {
+    "home": "Home",
+    "movies": "Movies",
+    "popular": "Popular",
+    "topRated": "Top Rated",
+    "upcoming": "Upcoming",
+    "wishlist": "Wishlist",
+    "search": "Search movies...",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "account": "Account",
+    "language": "Language"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Try Again",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "movie": {
+    "rating": "Rating",
+    "runtime": "Runtime",
+    "releaseDate": "Release Date",
+    "budget": "Budget",
+    "revenue": "Revenue",
+    "overview": "Overview",
+    "genres": "Genres",
+    "cast": "Cast",
+    "trailer": "Official Trailer",
+    "recommendations": "You May Also Like",
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist",
+    "inWishlist": "In Wishlist"
+  },
+  "home": {
+    "title": "Now Playing Movies",
+    "subtitle": "Discover the latest movies in theaters"
+  },
+  "popular": {
+    "title": "Popular Movies",
+    "subtitle": "Most popular movies right now"
+  },
+  "topRated": {
+    "title": "Top Rated Movies",
+    "subtitle": "The highest rated movies of all time"
+  },
+  "upcoming": {
+    "title": "Upcoming Movies",
+    "subtitle": "Movies coming soon to theaters"
+  },
+  "wishlist": {
+    "title": "My Wishlist",
+    "subtitle": "Your favorite movies collection",
+    "empty": "Your wishlist is empty",
+    "emptyMessage": "Start adding movies to build your collection!",
+    "clearAll": "Clear All",
+    "confirmClear": "Are you sure you want to clear your entire wishlist?",
+    "removed": "removed from wishlist",
+    "cleared": "Wishlist cleared successfully"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "results": "movies"
+  },
+  "errors": {
+    "loadFailed": "Failed to load data. Please try again later.",
+    "noResults": "No movies found",
+    "somethingWrong": "Oops! Something went wrong"
+  },
+  "footer": {
+    "description": "Discover and explore thousands of movies with detailed information, ratings, and reviews. Your ultimate movie companion.",
+    "movies": "Movies",
+    "account": "Account",
+    "company": "Company",
+    "aboutTmdb": "About TMDB",
+    "github": "GitHub Repository",
+    "contact": "Contact Us",
+    "helpCenter": "Help Center",
+    "comingSoon": "Coming Soon",
+    "allRights": "All rights reserved",
+    "poweredBy": "Powered by",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "myWishlist": "My Wishlist",
+    "accountDetails": "Account Details"
+  }
+}
