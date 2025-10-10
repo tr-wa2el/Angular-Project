@@ -45,6 +45,10 @@ export class I18nService {
   private translations: { [key: string]: any } = {};
   private translationsLoaded = false;
 
+  // Observable for translations updates
+  private translationsSubject = new BehaviorSubject<{ [key: string]: any }>({});
+  public translations$ = this.translationsSubject.asObservable();
+
   constructor() {
     const savedLanguage = this.loadLanguageFromStorage();
     this.currentLanguageSubject = new BehaviorSubject<SupportedLanguage>(savedLanguage);
@@ -140,6 +144,7 @@ export class I18nService {
       next: (translations: any) => {
         this.translations = translations;
         this.translationsLoaded = true;
+        this.translationsSubject.next(translations); // Notify subscribers
         console.log(`✅ Loaded translations for: ${code}`);
       },
       error: (error) => {
@@ -148,6 +153,7 @@ export class I18nService {
         // Fallback to embedded translations
         this.translations = this.getEmbeddedTranslations(code);
         this.translationsLoaded = true;
+        this.translationsSubject.next(this.translations); // Notify subscribers
       }
     });
   }
