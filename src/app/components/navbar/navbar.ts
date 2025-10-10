@@ -47,8 +47,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onSearch(event: Event): void {
     event.preventDefault();
-    if (this.searchQuery.trim()) {
-      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
+    const trimmedQuery = this.searchQuery.trim();
+    if (trimmedQuery) {
+      this.router.navigate(['/search'], { queryParams: { query: trimmedQuery } });
       this.searchQuery = '';
     }
   }
