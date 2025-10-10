@@ -1,6 +1,8 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { filter, Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
@@ -12,9 +14,10 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
   templateUrl: './popular.html',
   styleUrl: './popular.css'
 })
-export class PopularComponent implements OnInit {
+export class PopularComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private titleService = inject(Title);
+  private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -30,12 +33,36 @@ export class PopularComponent implements OnInit {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
+  // Router subscription
+  private routerSubscription?: Subscription;
+
   ngOnInit(): void {
     this.titleService.setTitle('Popular Movies | Movie App');
+
+    // Load movies immediately
     this.loadMovies();
+
+    // Subscribe to router events to reload when navigating to this route
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      // Only reload if we're on the popular route
+      if (event.urlAfterRedirects === '/popular') {
+        console.log('🎬 Navigation to popular detected, reloading movies...');
+        this.loadMovies(this.currentPage);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {
+    if (this.isLoading) {
+      console.log('🎬 Already loading movies, skipping...');
+      return;
+    }
     this.isLoading = true;
     this.error = null;
 
