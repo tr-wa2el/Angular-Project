@@ -85,4 +85,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // Navigate and force reload even if on same route
+  navigateAndReload(path: string): void {
+    const currentUrl = this.router.url;
+    if (currentUrl === path) {
+      // If already on this route, navigate to root first then back
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([path]);
+      });
+    } else {
+      // Normal navigation
+      this.router.navigate([path]);
+    }
+  }
 }

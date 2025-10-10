@@ -39,10 +39,10 @@
         }
       </button>
 
-      <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Now Playing</a>
-      <a routerLink="/popular" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Popular</a>
-      <a routerLink="/top-rated" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Top Rated</a>
-      <a routerLink="/upcoming" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Upcoming</a>
+      <a (click)="navigateAndReload('/home')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Now Playing</a>
+      <a (click)="navigateAndReload('/popular')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Popular</a>
+      <a (click)="navigateAndReload('/top-rated')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Top Rated</a>
+      <a (click)="navigateAndReload('/upcoming')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Upcoming</a>
       <!-- <a routerLink="/genremovie" class="nav-link" routerLinkActive="active">Genre</a> -->
 
       <a routerLink="/wishlist" class="nav-link wishlist-link" routerLinkActive="active">
@@ -81,10 +81,10 @@
 
   @if (showMobileMenu) {
     <div class="mobile-menu">
-      <a routerLink="/" (click)="toggleMobileMenu()">Now Playing</a>
-      <a routerLink="/popular" (click)="toggleMobileMenu()">Popular Movies</a>
-      <a routerLink="/top-rated" (click)="toggleMobileMenu()">Top Rated</a>
-      <a routerLink="/upcoming" (click)="toggleMobileMenu()">Upcoming</a>
+      <a (click)="navigateAndReload('/home'); toggleMobileMenu()" style="cursor: pointer">Now Playing</a>
+      <a (click)="navigateAndReload('/popular'); toggleMobileMenu()" style="cursor: pointer">Popular Movies</a>
+      <a (click)="navigateAndReload('/top-rated'); toggleMobileMenu()" style="cursor: pointer">Top Rated</a>
+      <a (click)="navigateAndReload('/upcoming'); toggleMobileMenu()" style="cursor: pointer">Upcoming</a>
       <a routerLink="/movies" (click)="toggleMobileMenu()">Movies</a>
       <a routerLink="/genremovie" (click)="toggleMobileMenu()">Genre</a>
       <a routerLink="/wishlist" (click)="toggleMobileMenu()" class="wishlist-mobile-link">
