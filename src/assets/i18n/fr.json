@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "Application de films",
+    "title": "Base de données de films"
+  },
+  "nav": {
+    "home": "Accueil",
+    "movies": "Films",
+    "popular": "Populaires",
+    "topRated": "Mieux notés",
+    "upcoming": "À venir",
+    "wishlist": "Favoris",
+    "search": "Rechercher des films...",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "register": "S'inscrire",
+    "account": "Compte",
+    "language": "Langue"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "movie": {
+    "rating": "Note",
+    "runtime": "Durée",
+    "releaseDate": "Date de sortie",
+    "budget": "Budget",
+    "revenue": "Recettes",
+    "overview": "Synopsis",
+    "genres": "Genres",
+    "cast": "Distribution",
+    "trailer": "Bande-annonce officielle",
+    "recommendations": "Vous aimerez aussi",
+    "addToWishlist": "Ajouter aux favoris",
+    "removeFromWishlist": "Retirer des favoris",
+    "inWishlist": "Dans les favoris"
+  },
+  "home": {
+    "title": "Films en salle",
+    "subtitle": "Découvrez les derniers films au cinéma"
+  },
+  "popular": {
+    "title": "Films populaires",
+    "subtitle": "Les films les plus populaires actuellement"
+  },
+  "topRated": {
+    "title": "Films les mieux notés",
+    "subtitle": "Les films les mieux notés de tous les temps"
+  },
+  "upcoming": {
+    "title": "Films à venir",
+    "subtitle": "Films bientôt au cinéma"
+  },
+  "wishlist": {
+    "title": "Mes favoris",
+    "subtitle": "Votre collection de films préférés",
+    "empty": "Votre liste de favoris est vide",
+    "emptyMessage": "Commencez à ajouter des films pour créer votre collection!",
+    "clearAll": "Tout effacer",
+    "confirmClear": "Êtes-vous sûr de vouloir effacer toute votre liste de favoris?",
+    "removed": "retiré des favoris",
+    "cleared": "Liste de favoris effacée avec succès"
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page",
+    "of": "sur",
+    "results": "films"
+  },
+  "errors": {
+    "loadFailed": "Échec du chargement des données. Veuillez réessayer plus tard.",
+    "noResults": "Aucun film trouvé",
+    "somethingWrong": "Oups! Quelque chose s'est mal passé"
+  },
+  "footer": {
+    "description": "Découvrez et explorez des milliers de films avec des informations détaillées, des notes et des critiques. Votre compagnon cinéma ultime.",
+    "movies": "Films",
+    "account": "Compte",
+    "company": "Entreprise",
+    "aboutTmdb": "À propos de TMDB",
+    "github": "Dépôt GitHub",
+    "contact": "Contactez-nous",
+    "helpCenter": "Centre d'aide",
+    "comingSoon": "Bientôt disponible",
+    "allRights": "Tous droits réservés",
+    "poweredBy": "Propulsé par",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "myWishlist": "Mes favoris",
+    "accountDetails": "Détails du compte"
+  }
+}

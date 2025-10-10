@@ -5,7 +5,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
           <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
         </svg>
-        <span>Movie App</span>
+        <span>{{ 'app.name' | translate }}</span>
       </a>
     </div>
 
@@ -15,7 +15,7 @@
           type="text"
           [(ngModel)]="searchQuery"
           name="search"
-          placeholder="Search movies..."
+          [placeholder]="'nav.search' | translate"
           class="search-input"
         />
         <button type="submit" class="search-btn">
@@ -27,6 +27,28 @@
     </div>
 
     <div class="navbar-actions">
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <button (click)="toggleLanguageMenu()" class="icon-btn language-btn" title="{{ 'nav.language' | translate }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+          <span class="language-code">{{ currentLanguage.toUpperCase() }}</span>
+        </button>
+
+        <div class="language-menu" *ngIf="showLanguageMenu">
+          <button
+            *ngFor="let lang of languages"
+            (click)="changeLanguage(lang.code)"
+            class="language-option"
+            [class.active]="lang.code === currentLanguage"
+          >
+            <span class="language-name">{{ lang.nativeName }}</span>
+            <span class="language-label">{{ lang.name }}</span>
+          </button>
+        </div>
+      </div>
+
       <button (click)="toggleDarkMode()" class="icon-btn" title="Toggle dark mode">
         @if (themeService.isDarkMode()) {
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
@@ -39,17 +61,17 @@
         }
       </button>
 
-      <a (click)="navigateAndReload('/home')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Now Playing</a>
-      <a (click)="navigateAndReload('/popular')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Popular</a>
-      <a (click)="navigateAndReload('/top-rated')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Top Rated</a>
-      <a (click)="navigateAndReload('/upcoming')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">Upcoming</a>
+      <a (click)="navigateAndReload('/home')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">{{ 'nav.home' | translate }}</a>
+      <a (click)="navigateAndReload('/popular')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">{{ 'nav.popular' | translate }}</a>
+      <a (click)="navigateAndReload('/top-rated')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">{{ 'nav.topRated' | translate }}</a>
+      <a (click)="navigateAndReload('/upcoming')" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer">{{ 'nav.upcoming' | translate }}</a>
       <!-- <a routerLink="/genremovie" class="nav-link" routerLinkActive="active">Genre</a> -->
 
       <a routerLink="/wishlist" class="nav-link wishlist-link" routerLinkActive="active">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
-        Wishlist
+        {{ 'nav.wishlist' | translate }}
         <span class="wishlist-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
 
@@ -68,7 +90,7 @@
         <svg *ngIf="isLoggedIn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
           <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
         </svg>
-        {{ isLoggedIn ? 'Logout' : 'Login' }}
+        {{ isLoggedIn ? ('nav.logout' | translate) : ('nav.login' | translate) }}
       </button>
     </div>
 
@@ -81,22 +103,21 @@
 
   @if (showMobileMenu) {
     <div class="mobile-menu">
-      <a (click)="navigateAndReload('/home'); toggleMobileMenu()" style="cursor: pointer">Now Playing</a>
-      <a (click)="navigateAndReload('/popular'); toggleMobileMenu()" style="cursor: pointer">Popular Movies</a>
-      <a (click)="navigateAndReload('/top-rated'); toggleMobileMenu()" style="cursor: pointer">Top Rated</a>
-      <a (click)="navigateAndReload('/upcoming'); toggleMobileMenu()" style="cursor: pointer">Upcoming</a>
-      <a routerLink="/movies" (click)="toggleMobileMenu()">Movies</a>
-      <a routerLink="/genremovie" (click)="toggleMobileMenu()">Genre</a>
+      <a (click)="navigateAndReload('/home'); toggleMobileMenu()" style="cursor: pointer">{{ 'nav.home' | translate }}</a>
+      <a (click)="navigateAndReload('/popular'); toggleMobileMenu()" style="cursor: pointer">{{ 'nav.popular' | translate }}</a>
+      <a (click)="navigateAndReload('/top-rated'); toggleMobileMenu()" style="cursor: pointer">{{ 'nav.topRated' | translate }}</a>
+      <a (click)="navigateAndReload('/upcoming'); toggleMobileMenu()" style="cursor: pointer">{{ 'nav.upcoming' | translate }}</a>
+      <a routerLink="/movies" (click)="toggleMobileMenu()">{{ 'nav.movies' | translate }}</a>
       <a routerLink="/wishlist" (click)="toggleMobileMenu()" class="wishlist-mobile-link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
-        Wishlist
+        {{ 'nav.wishlist' | translate }}
         <span class="wishlist-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
-      <a *ngIf="isLoggedIn" routerLink="/accdetails" (click)="toggleMobileMenu()">Account Details</a>
+      <a *ngIf="isLoggedIn" routerLink="/accdetails" (click)="toggleMobileMenu()">{{ 'nav.account' | translate }}</a>
       <button (click)="onAuthAction(); toggleMobileMenu()" class="mobile-auth-btn" [class.btn-danger]="isLoggedIn" [class.btn-primary]="!isLoggedIn">
-        {{ isLoggedIn ? 'Logout' : 'Login' }}
+        {{ isLoggedIn ? ('nav.logout' | translate) : ('nav.login' | translate) }}
       </button>
     </div>
   }

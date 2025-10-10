@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MovieService } from '../../services/movie.service';
+import { WishlistService } from '../../services/wishlist.service';
 import { Movie, MovieVideo, CastMember, MovieRecommendationsResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 
@@ -17,6 +18,7 @@ export class MovieDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private movieService = inject(MovieService);
+  private wishlistService = inject(WishlistService);
   private titleService = inject(Title);
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
@@ -171,49 +173,30 @@ export class MovieDetailsComponent implements OnInit {
   toggleWishlist(): void {
     if (!this.movie) return;
 
-    this.isInWishlist = !this.isInWishlist;
-
     if (this.isInWishlist) {
-      this.addToWishlist();
+      // Remove from wishlist
+      const removed = this.wishlistService.removeFromWishlist(this.movie.id);
+      if (removed) {
+        this.isInWishlist = false;
+        console.log('✅ Removed from wishlist:', this.movie.title);
+      }
     } else {
-      this.removeFromWishlist();
+      // Add to wishlist
+      const added = this.wishlistService.addToWishlist(this.movie.id);
+      if (added) {
+        this.isInWishlist = true;
+        console.log('✅ Added to wishlist:', this.movie.title);
+      }
     }
+
+    // Force change detection
+    this.cdr.detectChanges();
   }
 
   private checkWishlistStatus(): void {
     if (!this.movie) return;
-    const wishlist = this.getWishlistFromStorage();
-    this.isInWishlist = wishlist.some(id => id === this.movie!.id);
-  }
-
-  private addToWishlist(): void {
-    if (!this.movie) return;
-    const wishlist = this.getWishlistFromStorage();
-    if (!wishlist.includes(this.movie.id)) {
-      wishlist.push(this.movie.id);
-      this.saveWishlistToStorage(wishlist);
-      console.log('Added to wishlist:', this.movie.title);
-    }
-  }
-
-  private removeFromWishlist(): void {
-    if (!this.movie) return;
-    let wishlist = this.getWishlistFromStorage();
-    wishlist = wishlist.filter(id => id !== this.movie!.id);
-    this.saveWishlistToStorage(wishlist);
-    console.log('Removed from wishlist:', this.movie.title);
-  }
-
-  private getWishlistFromStorage(): number[] {
-    if (!this.isBrowser) return [];
-    const wishlist = localStorage.getItem('movieWishlist');
-    return wishlist ? JSON.parse(wishlist) : [];
-  }
-
-  private saveWishlistToStorage(wishlist: number[]): void {
-    if (!this.isBrowser) return;
-    localStorage.setItem('movieWishlist', JSON.stringify(wishlist));
-    window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail: { count: wishlist.length } }));
+    this.isInWishlist = this.wishlistService.isInWishlist(this.movie.id);
+    console.log('🔍 Checking wishlist status for:', this.movie.title, '→', this.isInWishlist);
   }
 
   goBack(): void {

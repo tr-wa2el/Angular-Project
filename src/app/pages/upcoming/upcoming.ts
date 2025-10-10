@@ -1,7 +1,10 @@
-import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
+import { I18nService } from '../../services/i18n.service';
 import { Movie, MovieListResponse } from '../../models/movie.model';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card';
 
@@ -12,9 +15,11 @@ import { MovieCardComponent } from '../../shared/components/movie-card/movie-car
   templateUrl: './upcoming.html',
   styleUrl: './upcoming.css'
 })
-export class UpcomingComponent implements OnInit {
+export class UpcomingComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
+  private i18nService = inject(I18nService);
   private titleService = inject(Title);
+  private route = inject(ActivatedRoute);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private cdr = inject(ChangeDetectorRef);
@@ -31,10 +36,29 @@ export class UpcomingComponent implements OnInit {
   // Skeleton loading
   skeletonArray: number[] = Array(20).fill(0);
 
+  // Subscriptions
+  private routeSubscription?: Subscription;
+  private languageSubscription?: Subscription;
+
   ngOnInit(): void {
     this.titleService.setTitle('Upcoming Movies | Movie App');
-    console.log('📅 Upcoming route activated, loading movies...');
-    this.loadMovies();
+
+    // Subscribe to route params changes (this fires on every navigation)
+    this.routeSubscription = this.route.params.subscribe(() => {
+      console.log('📅 Route activated, loading upcoming movies...');
+      this.loadMovies();
+    });
+
+    // Subscribe to language changes
+    this.languageSubscription = this.i18nService.currentLanguage$.subscribe((lang) => {
+      console.log('🌍 Language changed to:', lang, '- Reloading upcoming movies...');
+      this.loadMovies(this.currentPage);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
+    this.languageSubscription?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {

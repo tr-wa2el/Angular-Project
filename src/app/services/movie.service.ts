@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
+import { I18nService } from './i18n.service';
 import {
   Movie,
   MovieListResponse,
@@ -14,11 +15,13 @@ import {
 })
 export class MovieService {
   private apiService = inject(ApiService);
+  private i18nService = inject(I18nService);
 
   /**
    * Get now playing movies
    */
-  getNowPlayingMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
+  getNowPlayingMovies(page: number = 1): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService
       .getNowPlayingMovies(page, language)
       .pipe(map((response) => response.data));
@@ -27,28 +30,32 @@ export class MovieService {
   /**
    * Get popular movies
    */
-  getPopularMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
+  getPopularMovies(page: number = 1): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getPopularMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get top rated movies
    */
-  getTopRatedMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
+  getTopRatedMovies(page: number = 1): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getTopRatedMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get upcoming movies
    */
-  getUpcomingMovies(page: number = 1, language: string = 'en-US'): Observable<MovieListResponse> {
+  getUpcomingMovies(page: number = 1): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getUpcomingMovies(page, language).pipe(map((response) => response.data));
   }
 
   /**
    * Get movie details by ID
    */
-  getMovieDetails(id: number, language: string = 'en-US'): Observable<Movie> {
+  getMovieDetails(id: number): Observable<Movie> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getMovieDetails(id, language).pipe(map((response) => response.data));
   }
 
@@ -62,7 +69,8 @@ export class MovieService {
   /**
    * Get movie videos (trailers, teasers, etc.)
    */
-  getMovieVideos(id: number, language: string = 'en-US'): Observable<MovieVideosResponse> {
+  getMovieVideos(id: number): Observable<MovieVideosResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getMovieVideos(id, language).pipe(map((response) => response.data));
   }
 
@@ -71,9 +79,9 @@ export class MovieService {
    */
   getMovieRecommendations(
     id: number,
-    page: number = 1,
-    language: string = 'en-US'
+    page: number = 1
   ): Observable<MovieRecommendationsResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService
       .getMovieRecommendations(id, page, language)
       .pipe(map((response) => response.data));
@@ -84,9 +92,9 @@ export class MovieService {
    */
   searchMovies(
     query: string,
-    page: number = 1,
-    language: string = 'en-US'
+    page: number = 1
   ): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService
       .searchMovies(query, page, language)
       .pipe(map((response) => response.data));
@@ -97,9 +105,9 @@ export class MovieService {
    */
   getMoviesByGenre(
     genreId: number,
-    page: number = 1,
-    language: string = 'en-US'
+    page: number = 1
   ): Observable<MovieListResponse> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService
       .getMoviesByGenre(genreId, page, language)
       .pipe(map((response) => response.data));
@@ -182,9 +190,10 @@ export class MovieService {
   /**
    * Get list of movie genres
    */
-  getGenres(language: string = 'en-US'): Observable<{ genres: { id: number; name: string }[] }> {
+  getGenres(): Observable<{ genres: { id: number; name: string }[] }> {
+    const language = this.i18nService.getApiLanguageCode();
     return this.apiService.getGenres(language).pipe(map((response) => response.data));
   }
 
-  
+
 }
