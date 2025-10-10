@@ -4,6 +4,9 @@
 
 A modern, full-stack Angular 18 application powered by The Movie Database (TMDB) API, featuring real-time authentication, wishlist management, and comprehensive movie browsing capabilities.
 
+### 🌐 **Live Demo**
+**🔗 [View Live Application](https://unique-platypus-b8fa80.netlify.app/home)** - Deployed on Netlify
+
 ### ✨ Live Features:
 
 #### 🏠 **Core Pages**
