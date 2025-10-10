@@ -39,10 +39,10 @@
         }
       </button>
 
-      <a routerLink="/home" class="nav-link" routerLinkActive="active">Now Playing</a>
-      <a routerLink="/popular" class="nav-link" routerLinkActive="active">Popular</a>
-      <a routerLink="/top-rated" class="nav-link" routerLinkActive="active">Top Rated</a>
-      <a routerLink="/upcoming" class="nav-link" routerLinkActive="active">Upcoming</a>
+      <a routerLink="/" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Now Playing</a>
+      <a routerLink="/popular" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Popular</a>
+      <a routerLink="/top-rated" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Top Rated</a>
+      <a routerLink="/upcoming" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Upcoming</a>
       <!-- <a routerLink="/genremovie" class="nav-link" routerLinkActive="active">Genre</a> -->
 
       <a routerLink="/wishlist" class="nav-link wishlist-link" routerLinkActive="active">
@@ -81,7 +81,7 @@
 
   @if (showMobileMenu) {
     <div class="mobile-menu">
-      <a routerLink="/home" (click)="toggleMobileMenu()">Now Playing</a>
+      <a routerLink="/" (click)="toggleMobileMenu()">Now Playing</a>
       <a routerLink="/popular" (click)="toggleMobileMenu()">Popular Movies</a>
       <a routerLink="/top-rated" (click)="toggleMobileMenu()">Top Rated</a>
       <a routerLink="/upcoming" (click)="toggleMobileMenu()">Upcoming</a>
