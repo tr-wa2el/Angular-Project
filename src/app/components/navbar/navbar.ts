@@ -68,7 +68,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       // Check if we're already on search page with same query
       const currentUrl = this.router.url;
       const targetUrl = `/search?query=${encodeURIComponent(trimmedQuery)}`;
-      
+
       if (currentUrl.includes(targetUrl) || currentUrl.includes(`query=${encodeURIComponent(trimmedQuery)}`)) {
         // Force reload by navigating away then back
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule, DecimalPipe, isPlatformBrowser } from '@angular/common';
@@ -15,13 +15,14 @@ import { MovieListResponse } from '../../shared';
   templateUrl: './search-results.html',
   styleUrls: ['./search-results.css']
 })
-export class SearchResults implements OnInit {
+export class SearchResults implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private titleService = inject(Title);
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private cdr = inject(ChangeDetectorRef);
 
   movies: Movie[] = [];
   searchQuery: string = '';
@@ -36,19 +37,36 @@ export class SearchResults implements OnInit {
   // Skeleton placeholders
   skeletonArray: number[] = Array(20).fill(0);
 
-  private routeSub?: Subscription;
+  private queryParamsSub?: Subscription;
+  private paramsSub?: Subscription;
 
   ngOnInit(): void {
-    // Listen to changes in query param (search?query=xxx)
-    this.routeSub = this.route.queryParams.subscribe(params => {
-      const newQuery = params['query'] || '';
-      
-      // Always load if there's a query, even if it's the same as before
-      if (newQuery.trim()) {
-        this.searchQuery = newQuery;
+    // Subscribe to route params changes (fires on every navigation to /search)
+    this.paramsSub = this.route.params.subscribe(() => {
+      console.log('🔍 Search route activated, checking query params...');
+
+      // Get query param
+      const query = this.route.snapshot.queryParams['query'] || '';
+
+      if (query.trim()) {
+        this.searchQuery = query;
+        console.log('🔍 Searching for:', this.searchQuery);
         this.loadMovies();
         this.titleService.setTitle(`Search: ${this.searchQuery} | Movie App`);
-      } else {
+      }
+    });
+
+    // Also listen to query params changes (for when params change without route change)
+    this.queryParamsSub = this.route.queryParams.subscribe(params => {
+      const newQuery = params['query'] || '';
+
+      // Only load if query is different from current
+      if (newQuery.trim() && newQuery !== this.searchQuery) {
+        this.searchQuery = newQuery;
+        console.log('🔍 Query changed to:', this.searchQuery);
+        this.loadMovies();
+        this.titleService.setTitle(`Search: ${this.searchQuery} | Movie App`);
+      } else if (!newQuery.trim()) {
         // Clear results if no query
         this.movies = [];
         this.searchQuery = '';
@@ -57,7 +75,8 @@ export class SearchResults implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.routeSub?.unsubscribe();
+    this.queryParamsSub?.unsubscribe();
+    this.paramsSub?.unsubscribe();
   }
 
   loadMovies(page: number = 1): void {
@@ -72,6 +91,10 @@ export class SearchResults implements OnInit {
         this.totalResults = response.total_results;
         this.isLoading = false;
 
+        // Force Angular to detect changes
+        this.cdr.detectChanges();
+        console.log('🔄 Search: Change detection triggered');
+
         // Scroll up
         if (this.isBrowser) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,6 +104,7 @@ export class SearchResults implements OnInit {
         console.error('❌ Search error:', err);
         this.error = 'Failed to load search results. Please try again later.';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
