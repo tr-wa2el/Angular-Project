@@ -41,10 +41,17 @@ export class SearchResults implements OnInit {
   ngOnInit(): void {
     // Listen to changes in query param (search?query=xxx)
     this.routeSub = this.route.queryParams.subscribe(params => {
-      this.searchQuery = params['query'] || '';
-      if (this.searchQuery.trim()) {
+      const newQuery = params['query'] || '';
+      
+      // Always load if there's a query, even if it's the same as before
+      if (newQuery.trim()) {
+        this.searchQuery = newQuery;
         this.loadMovies();
         this.titleService.setTitle(`Search: ${this.searchQuery} | Movie App`);
+      } else {
+        // Clear results if no query
+        this.movies = [];
+        this.searchQuery = '';
       }
     });
   }
